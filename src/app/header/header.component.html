@@ -3,7 +3,9 @@
     <a class="navbar-brand" href="#">
       <img src="/favicon.ico" alt="" />
     </a>
-    v0.2.0
+    <span class="text-muted">
+      v0.2.0
+    </span>
     <button
       class="navbar-toggler"
       type="button"
@@ -26,21 +28,27 @@
             >Product Listing</a
           >
         </li>
-        <li class="nav-item">
+        <span
+          class="mx-4 text-muted"
+          [ngStyle]="{ borderLeft: '1px solid' }"
+        ></span>
+        <li class="nav-item mr-2">
           <a
             routerLink="shopping-cart"
             routerLinkActive="active"
             class="nav-link"
-            >Shopping Cart</a
           >
+            <fa-icon [icon]="faShoppingCart" size="1x"></fa-icon>
+          </a>
         </li>
         <li class="nav-item">
           <a
             routerLink="user-profile"
             routerLinkActive="active"
             class="nav-link"
-            >User Profile</a
           >
+            <fa-icon [icon]="faUserCircle" size="lg"></fa-icon>
+          </a>
         </li>
       </ul>
     </div>

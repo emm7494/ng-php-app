@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductListingComponent } from './product-listing/product-listing.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
