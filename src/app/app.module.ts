@@ -9,6 +9,7 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProductListingListComponent } from './product-listing/product-listing-list/product-listing-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterComponent,
     ProductListingComponent,
     ShoppingCartComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ProductListingListComponent
   ],
   imports: [
     BrowserModule,
