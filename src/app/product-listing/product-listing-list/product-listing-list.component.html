@@ -1,65 +1,15 @@
-<ul class="list-unstyled row row-cols-1 row-cols-md-3 row-cols-lg-4">
-  <li class="col mb-4">
-    <div class="card h-100">
-      <img
-        src="https://source.unsplash.com/random/1"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+<ul
+  class="py-3 list-unstyled row row-cols-2 row-cols-sm-4 row-cols-md-4 row-cols-lg-6"
+>
+  <li *ngFor="let product of products" class="col mb-4">
+    <div class="card h-100 border-0">
+      <img src="{{ product.imageUrl }}" class="card-img-top" alt="..." />
+      <div class="card-body px-0">
+        <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+          This is a longer card with supporting text.
         </p>
-      </div>
-    </div>
-  </li>
-  <li class="col mb-4">
-    <div class="card h-100">
-      <img
-        src="https://source.unsplash.com/random/2"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </li>
-  <li class="col mb-4">
-    <div class="card h-100">
-      <img
-        src="https://source.unsplash.com/random/3"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content.
-        </p>
-      </div>
-    </div>
-  </li>
-  <li class="col mb-4">
-    <div class="card h-100">
-      <img
-        src="https://source.unsplash.com/random/4"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
+        <p class="card-text">GHS {{ product.price }}</p>
       </div>
     </div>
   </li>
