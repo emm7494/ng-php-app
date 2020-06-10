@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class="container">
+  <div class="container-fluid container-md">
     <a class="navbar-brand" href="#">
       <img src="/favicon.ico" alt="" />
     </a>
     <span class="text-muted">
-      v0.2.0
+      v0.3.0
     </span>
     <button
       class="navbar-toggler"
@@ -19,20 +19,20 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+      <ul class="navbar-nav ml-sm-auto">
+        <li class="nav-item mx-auto">
           <a
             routerLink="product-listing"
             routerLinkActive="active"
             class="nav-link"
-            >Product Listing</a
+            >Products</a
           >
         </li>
         <span
-          class="mx-4 text-muted"
-          [ngStyle]="{ borderLeft: '1px solid' }"
+          class="d-none d-sm-block mx-sm-4 text-muted"
+          [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
         ></span>
-        <li class="nav-item mr-2">
+        <li class="nav-item mr-sm-2 mx-auto">
           <a
             routerLink="shopping-cart"
             routerLinkActive="active"
@@ -41,7 +41,7 @@
             <fa-icon [icon]="faShoppingCart" size="1x"></fa-icon>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-auto">
           <a
             routerLink="user-profile"
             routerLinkActive="active"
