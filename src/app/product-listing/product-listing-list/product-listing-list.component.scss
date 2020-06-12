@@ -5,18 +5,70 @@
 
 @media (max-width: 575.98px) {
   .card-img-top {
-    height: 30vw;
+    // height: 30vw;
+    height: 100%;
   }
 }
 
 @media (min-width: 576px) {
   .card-img-top {
-    height: 15vw;
+    // height: 15vw;
+    height: 100%;
   }
 }
 
 @media (min-width: 992px) {
   .card-img-top {
-    height: 8vw;
+    // height: 8vw;
+    height: 100%;
   }
 }
+
+.card-text {
+  line-height: 1.2;
+}
+
+.overlay-wrapper {
+  position: relative;
+}
+
+.card:hover {
+  & .overlay-layer {
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: gray;
+  }
+  & .overlay-content {
+    display: block;
+    color: white;
+  }
+}
+
+.overlay-layer {
+  bottom: 100%;
+  right: 100%;
+  transition: bottom 0.5s ease-out, right 0.5s ease-out;
+}
+
+.overlay-content {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// .overlay-wrapper:hover::after {
+//   opacity: 0.4;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   content: "Some text.";
+//   background-color: black;
+//   transform: translate(-50%, -50%);
+//   color: white;
+// }
