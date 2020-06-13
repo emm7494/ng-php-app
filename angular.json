@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "ng-php-app"
+  "defaultProject": "ng-php-app",
+  "cli": {
+    "analytics": "ddeb7dab-ce4f-4e0b-9d19-41cc4634895b"
+  }
 }
