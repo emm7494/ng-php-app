@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../shared/models/product.model';
 import { faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { HttpClient } from '@angular/common/http';
+import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-product-listing-list',
   templateUrl: './product-listing-list.component.html',
@@ -25,12 +25,16 @@ export class ProductListingListComponent implements OnInit {
   products: Product[];
   faCartPlus = faCartPlus;
   faHeart = faHeart;
-  constructor(private http: HttpClient) {}
+  constructor(private productService: ProductService) {}
   ngOnInit(): void {
-    this.http
-      .get('http://localhost:4000/api/get_products_json')
-      .subscribe((products: Product[]) => {
-        this.products = products;
-      });
+    this.productService.getAllProducts().subscribe((products: Product[]) => {
+      this.products = products;
+    });
+
+    // this.http
+    //   .get('http://localhost:4000/api/get_products_json')
+    //   .subscribe((products: Product[]) => {
+    //     this.products = products;
+    //   });
   }
 }

@@ -8,6 +8,8 @@ $db = new Database();
 $conn = $db->connect();
 if ('/api/get_products_json' === $uri) {
   require_once '../api/get_products_json.php';
+} elseif ('/api/get_product_json' === $uri) {
+  require_once '../api/get_product_json.php';
 } elseif ('/api/get_cart_json' === $uri) {
   require_once '../api/get_cart_json.php';
 } elseif ('/api/set_cart_json' === $uri) {

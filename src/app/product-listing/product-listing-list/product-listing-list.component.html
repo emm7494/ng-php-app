@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <ul
   class="py-3 list-unstyled row row-cols-2 row-cols-sm-4 row-cols-md-4 row-cols-lg-6"
 >
@@ -21,7 +22,13 @@
         </p>
         <p class="card-text pr-2 d-flex justify-content-between">
           <span class="text-muted"> GHS {{ product.price }} </span>
-          <fa-icon class="text-muted card-icon" [icon]="faCartPlus"></fa-icon>
+          <fa-icon
+            class="text-muted card-icon"
+            [icon]="faCartPlus"
+            data-toggle="modal"
+            data-target="#productModal"
+            [routerLink]="['product-modal', product.id]"
+          ></fa-icon>
         </p>
       </div>
     </div>

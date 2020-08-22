@@ -11,6 +11,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProductListingListComponent } from './product-listing/product-listing-list/product-listing-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductModalComponent } from './modals/product-modal/product-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,11 @@ import { HttpClientModule } from '@angular/common/http';
     ShoppingCartComponent,
     UserProfileComponent,
     ProductListingListComponent,
+    ProductModalComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,

@@ -1,0 +1,107 @@
+<div
+  class="modal fade show"
+  id="productModal"
+  tabindex="-1"
+  aria-labelledby="productModalLabel"
+  aria-hidden="true"
+  style="padding-right: 16px; display: block;"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="productModalLabel">{{ product.name }}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="onClose()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="media">
+          <img
+            src="{{ product.image }}"
+            width="150"
+            height="100"
+            class="align-self-center mr-3"
+            alt="..."
+          />
+          <div class="media-body">
+            <!-- {{ product | json }} -->
+            <div class="input-group mb-3 w-50">
+              <div class="input-group-prepend">
+                <span
+                  (click)="changeQuantity('minus')"
+                  class="input-group-text"
+                >
+                  <fa-icon
+                    [icon]="faMinus"
+                    class="text-secondary"
+                    size="1x"
+                  ></fa-icon>
+                </span>
+              </div>
+              <input
+                type="text"
+                class="form-control text-center"
+                placeholder=""
+                aria-label="Quantity input"
+                aria-describedby="basic-addon1"
+                id="quantityInput"
+                [(ngModel)]="quantity"
+                (ngModelChange)="quantityChanged($event)"
+              />
+              <div class="input-group-append">
+                <span (click)="changeQuantity('plus')" class="input-group-text">
+                  <fa-icon
+                    [icon]="faPlus"
+                    class="text-secondary"
+                    size="1x"
+                  ></fa-icon>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="quantity > -1">
+              <label
+                style="user-select: none;"
+                class="text-secondary"
+                for="quantityInput"
+              >
+                Total: GHS {{ total }}
+              </label>
+            </div>
+            <div *ngIf="quantity < 0">
+              <label
+                style="user-select: none;"
+                class="text-danger"
+                for="quantityInput"
+                >Invalid quantity input!</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <!-- <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="onClose()"
+        >
+          Close
+        </button> -->
+        <button
+          [disabled]="error"
+          type="button"
+          class="btn btn-primary"
+          (click)="addToCart()"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
