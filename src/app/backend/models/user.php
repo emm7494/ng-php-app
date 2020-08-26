@@ -20,6 +20,7 @@ class User
     $stmnt = $this->conn->prepare($query);
     $stmnt->bindParam(':email', $this->email);
     $stmnt->execute();
+    return $stmnt->fetch(PDO::FETCH_ASSOC);
   }
 
   function create()
