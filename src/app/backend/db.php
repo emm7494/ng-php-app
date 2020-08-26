@@ -27,10 +27,6 @@ class Database
   }
   function __destruct()
   {
-    try {
-      $this->conn = null;
-    } catch (PDOException $e) {
-      echo "Disconnection failed: " . $e->getMessage();
-    }
+    $this->conn = null;
   }
 }

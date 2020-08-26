@@ -35,13 +35,15 @@ export class ProductListingListComponent implements OnInit {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
       this.products = products;
     });
-    this.authService.signUp('emm7494@gmail.com', 'pass').subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+    this.authService
+      .signUp('Emmanuel', 'Adu Gyamfi', 'emm7494@gmail.com', 'pass')
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
   }
 }
