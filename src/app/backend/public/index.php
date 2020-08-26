@@ -6,6 +6,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $db = new Database();
 $conn = $db->connect();
+
 if ('/api/get_products_json' === $uri) {
   require_once '../api/get_products_json.php';
 } elseif ('/api/get_product_json' === $uri) {
@@ -16,6 +17,8 @@ if ('/api/get_products_json' === $uri) {
   require_once '../api/set_cart_json.php';
 } elseif ('/api/del_cart_json' === $uri) {
   require_once '../api/del_cart_json.php';
+} elseif ('/api/post_signup_user' === $uri) {
+  require_once '../api/post_signup_user.php';
 } else {
   header('HTTP/1.1 404 Not Found');
 }

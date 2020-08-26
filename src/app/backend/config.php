@@ -13,4 +13,6 @@ define("DB_PASS", "password");
 define("DB_NAME", "shop");
 define("DB_CHARSET", 'utf8');
 
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://localhost:4200');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");

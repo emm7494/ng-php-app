@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../shared/models/product.model';
 import { faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../services/product/product.service';
+import { AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-product-listing-list',
   templateUrl: './product-listing-list.component.html',
@@ -25,16 +26,22 @@ export class ProductListingListComponent implements OnInit {
   products: Product[];
   faCartPlus = faCartPlus;
   faHeart = faHeart;
-  constructor(private productService: ProductService) {}
+
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService
+  ) {}
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
       this.products = products;
     });
-
-    // this.http
-    //   .get('http://localhost:4000/api/get_products_json')
-    //   .subscribe((products: Product[]) => {
-    //     this.products = products;
-    //   });
+    this.authService.signUp('emm7494@gmail.com', 'pass').subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 }

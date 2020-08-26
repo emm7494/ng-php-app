@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../shared/models/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,8 +31,13 @@ export class ProductModalComponent implements OnInit {
         });
     });
   }
+  setError(state: boolean) {
+    this.error = state;
+  }
+  setTotal() {
+    this.total = this.product.price * this.quantity;
+  }
   quantityChanged(value: number) {
-    console.log(value);
     if (value < 1) {
       this.setError(true);
     }
@@ -40,12 +45,7 @@ export class ProductModalComponent implements OnInit {
       this.setError(false);
     }
   }
-  setError(state: boolean) {
-    this.error = state;
-  }
-  setTotal() {
-    this.total = this.product.price * this.quantity;
-  }
+  validateQuantity() {}
   changeQuantity(action: string) {
     switch (action) {
       case 'plus':
