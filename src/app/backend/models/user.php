@@ -2,10 +2,10 @@
 class User
 {
   private $conn;
-  public $table_name = "users";
+  private $password;
+  private $table_name = "users";
   public $id;
   public $email;
-  public $password;
   public $firstname;
   public $lastname;
 
@@ -55,6 +55,7 @@ class User
       return false;
     }
     $this->mountData($user);
+    unset($user->password);
     return $user;
   }
   private function mountData($user)
@@ -72,8 +73,9 @@ class User
   {
     $this->password = password_hash($password, PASSWORD_BCRYPT);
   }
-  public function checkPassword()
+  public function checkPassword($password)
   {
-    // return password_verify($this->password)
+
+    return password_verify($password, $this->password);
   }
 }
