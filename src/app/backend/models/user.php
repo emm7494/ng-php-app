@@ -2,28 +2,22 @@
 class User
 {
   private $conn;
-  private $table_name = "users";
+  public $table_name = "users";
   public $id;
+  public $email;
+  public $password;
   public $firstname;
   public $lastname;
-  public $email;
-  private $password;
 
-  public function __construct($conn)
+  public function __construct($conn, $email,  $firstname = null, $lastname = null)
   {
     $this->conn = $conn;
+    $this->email = $email;
+    $this->firstname = $firstname;
+    $this->lastname = $lastname;
   }
 
-  function getUser()
-  {
-    $query = "SELECT * FROM " . $this->table_name . " WHERE email = :email";
-    $stmnt = $this->conn->prepare($query);
-    $stmnt->bindParam(':email', $this->email);
-    $stmnt->execute();
-    return $stmnt->fetch(PDO::FETCH_ASSOC);
-  }
-
-  function create()
+  public function create()
   {
     $query = "INSERT INTO " . $this->table_name . "
     SET
@@ -44,8 +38,42 @@ class User
     return false;
   }
 
-  public function setPassword()
+  public function getUser($boolean = false)
   {
-    $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    $query = "SELECT * FROM " . $this->table_name . " WHERE email = :email";
+    $stmnt = $this->conn->prepare($query);
+    $stmnt->bindParam(':email', $this->email);
+    $stmnt->execute();
+    $user = $stmnt->fetch(PDO::FETCH_OBJ);
+    if ($boolean) {
+      $count = $stmnt->rowCount();
+      if ($count > 0) {
+        $this->mountData($user);
+        return true;
+      }
+      $this->mountData($user);
+      return false;
+    }
+    $this->mountData($user);
+    return $user;
+  }
+  private function mountData($user)
+  {
+    if ($user) {
+      $this->id = $user->id;
+      $this->email = $user->email;
+      $this->password = $user->password;
+      $this->firstname = $user->firstname;
+      $this->lastname = $user->lastname;
+    }
+  }
+
+  public function setPassword($password)
+  {
+    $this->password = password_hash($password, PASSWORD_BCRYPT);
+  }
+  public function checkPassword()
+  {
+    // return password_verify($this->password)
   }
 }

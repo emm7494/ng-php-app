@@ -6,9 +6,13 @@ $data = json_decode(file_get_contents("php://input"));
 $db = new Database();
 $conn = $db->connect();
 
-$user = new User($conn, $data->email, $data->firstname, $data->lastname);
-
-$user->setPassword($data->password);
+$user = new User($conn, $data->email);
+if ($user->getUser($boolean = true)) {
+  $user->checkPassword($data->password);
+  http_response_code(200);
+  echo json_encode(array('message' => 'Login successful!', 'error' => false, 'user' => $user));
+  return false;
+}
 
 if ($user->getUser($boolean = true)) {
   http_response_code(400);
@@ -17,9 +21,18 @@ if ($user->getUser($boolean = true)) {
 }
 
 
-if ($user->create()) {
+if (
+  !empty($user->firstname)
+  &&
+  !empty($user->lastname)
+  &&
+  !empty($user->email)
+  &&
+  $user->create()
+) {
   http_response_code(201);
-  echo json_encode((array('message' => "User was created!", 'data' => array('user' => $user->getUser()), 'error' => false)));
+  $new_user = $user->getUser();
+  echo json_encode((array('message' => "User was created!", 'user' => $new_user, 'error' => false)));
   return true;
 } else {
   http_response_code(400);
