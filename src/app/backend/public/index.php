@@ -20,7 +20,7 @@ if ('/api/get_products_json' === $uri) {
 } elseif ('/api/post_signup_user' === $uri) {
   require_once '../api/post_signup_user.php';
 } elseif ('/api/post_login_user' === $uri) {
-  require_once '../api/post_signup_user.php';
+  require_once '../api/post_login_user.php';
 } else {
   header('HTTP/1.1 404 Not Found');
 }
