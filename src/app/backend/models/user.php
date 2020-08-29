@@ -58,6 +58,7 @@ class User
     unset($user->password);
     return $user;
   }
+
   private function mountData($user)
   {
     if ($user) {

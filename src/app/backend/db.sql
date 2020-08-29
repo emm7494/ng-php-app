@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2020 at 04:00 AM
--- Server version: 8.0.20-0ubuntu0.20.04.1
--- PHP Version: 7.4.7
+-- Generation Time: Aug 29, 2020 at 04:21 PM
+-- Server version: 8.0.21-0ubuntu0.20.04.4
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cart` (
+  `id` int NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,8 +39,8 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`user_id`, `product_id`, `created`) VALUES
-(1, 8, '2020-08-29 03:52:46');
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `created`) VALUES
+(1, 1, 1, '2020-08-29 16:20:50');
 
 -- --------------------------------------------------------
 
@@ -106,14 +107,16 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `create
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`user_id`,`product_id`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ITEM` (`user_id`,`product_id`),
   ADD KEY `OWNED` (`product_id`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `users`
@@ -127,10 +130,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `users`

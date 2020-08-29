@@ -4,6 +4,9 @@
       "path": "./src"
     },
     {
+      "path": "./src/app/backend"
+    },
+    {
       "path": "."
     }
   ],
