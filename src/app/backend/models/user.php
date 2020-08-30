@@ -9,7 +9,7 @@ class User
   public $firstname;
   public $lastname;
 
-  public function __construct($conn, $email,  $firstname = null, $lastname = null)
+  public function __construct($conn, $email = null,  $firstname = null, $lastname = null)
   {
     $this->conn = $conn;
     $this->email = $email;

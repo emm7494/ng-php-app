@@ -21,6 +21,8 @@ if ('/api/get_products' === $uri) {
   require_once '../api/post_signup_user.php';
 } elseif ('/api/post_login_user' === $uri) {
   require_once '../api/post_login_user.php';
+} elseif ('/api/post_logout_user' === $uri) {
+  require_once '../api/post_logout_user.php';
 } elseif ('/api/get_user_profile' === $uri) {
   require_once '../api/get_user_profile.php';
 } else {

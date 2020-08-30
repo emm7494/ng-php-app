@@ -2,6 +2,7 @@
 include_once '../models/user.php';
 include_once '../db.php';
 include_once '../helpers/token.php';
+include_once '../helpers/405_error.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $data = json_decode(file_get_contents("php://input"));
@@ -18,18 +19,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       'iss' => 'localhost:4000',
       'aud' => 'localhost:4200',
       'iat' => $iat,
-      'nbf' => $iat + 10,
-      'exp' => $iat + 30,
+      'nbf' => $iat + 0,
+      'exp' => $iat + 120,
       'data' => array(
-        'user' => $user->getUser()
+        'user_id' => $user->getUser()->id
       )
     );
     $jwt = Token::encodePayload($payload);
-    echo json_encode(array('message' => "Login successful!", 'data' => array('jwt' => $jwt, 'publicKey' => 'Token::getPublicKey()', 'user' => $user->getUser()), 'error' => false));
+    http_response_code(200);
+    echo json_encode(
+      array(
+        'message' => "Login successful!",
+        'data' => array(
+          'payload' => $payload,
+          'user' => $user->getUser(),
+          'jwt' => $jwt,
+          'publicKey' => 'Token::getPublicKey()',
+        ),
+        'error' => false
+      )
+    );
     return true;
   }
 
   http_response_code(400);
   echo json_encode(array('message' => 'Invalid credentials. Login failed!', 'error' => true));
   return false;
+} else {
+  sendError();
 }

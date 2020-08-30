@@ -12,7 +12,7 @@ class Product
   public $created;
   public $modified;
 
-  public function __construct($conn, $name, $price = null, $image = null, $description = null)
+  public function __construct($conn, $name = null, $price = null, $image = null, $description = null)
   {
     $this->conn = $conn;
     $this->name = $name;
@@ -29,15 +29,12 @@ class Product
       price = :price,
       image = :image,
       description = :description,
-      created = :created
     ";
     $stmnt = $this->conn->prepare($query);
     $stmnt->bindParam(':name', $this->name);
     $stmnt->bindParam(':price', $this->price);
     $stmnt->bindParam(':image', $this->image);
     $stmnt->bindParam(':description', $this->description);
-    $stmnt->bindParam(':created', $this->created);
-    $stmnt->bindParam(':modified', $this->modified);
 
     if ($stmnt->execute()) {
       return true;
@@ -45,11 +42,17 @@ class Product
     return false;
   }
 
-  public function getProduct($boolean = false)
+  public function getProduct($boolean = false, $byId = true)
   {
-    $query = "SELECT * FROM " . $this->table_name . " WHERE name = :name";
-    $stmnt = $this->conn->prepare($query);
-    $stmnt->bindParam(':name', $this->name);
+    if (!$byId) {
+      $query = "SELECT * FROM " . $this->table_name . " WHERE name = :name";
+      $stmnt = $this->conn->prepare($query);
+      $stmnt->bindParam(':name', $this->name);
+    } else {
+      $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+      $stmnt = $this->conn->prepare($query);
+      $stmnt->bindParam(':id', $this->id);
+    }
     $stmnt->execute();
     $product = $stmnt->fetch(PDO::FETCH_OBJ);
     if ($boolean) {
@@ -62,7 +65,6 @@ class Product
       return false;
     }
     $this->mountData($product);
-    unset($product->password);
     return $product;
   }
 

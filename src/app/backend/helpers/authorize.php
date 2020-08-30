@@ -7,8 +7,14 @@ function authorize()
     try {
       $decoded = Token::decodeJWT($jwt);
       http_response_code(200);
-      echo json_encode($decoded);
-      return true;
+      return $decoded->data->user_id;
+    } catch (UnexpectedValueException $e) {
+      http_response_code(401);
+      echo json_encode(array(
+        'message' => 'Invalid login token!',
+        'error' => true
+      ));
+      return false;
     } catch (Exception $e) {
       http_response_code(401);
       echo json_encode(array(

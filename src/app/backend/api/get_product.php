@@ -1,5 +1,16 @@
+<?php
+include_once '../models/product.php';
+include_once '../db.php';
+include_once '../helpers/405_error.php';
 
-<?php global $conn; ?>
-<?php $sql = "SELECT * FROM `products` WHERE id={$_GET['product-id']}"; ?>
-<?php $result = $conn->query($sql); ?>
-<?php exit(json_encode($result->fetch(PDO::FETCH_ASSOC))) ?>
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  if (isset($_GET['id'])) {
+    $db = new Database();
+    $conn = $db->connect();
+    $product = new Product($conn);
+    $product->id = $_GET['id'];
+    echo json_encode($product->getProduct($boolean = false, $byId = true));
+  }
+} else {
+  sendError();
+}

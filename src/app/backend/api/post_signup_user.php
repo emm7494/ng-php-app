@@ -1,6 +1,7 @@
 <?php
 include_once '../models/user.php';
 include_once '../db.php';
+include_once '../helpers/405_error.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $data = json_decode(file_get_contents("php://input"));
@@ -27,4 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode(array('message' => 'Unable to create user!', 'error' => true));
     return false;
   }
+} else {
+  sendError();
 }
