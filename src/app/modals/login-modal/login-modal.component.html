@@ -1,0 +1,58 @@
+<div
+  [ngClass]="{ show: showModal }"
+  class="modal fade"
+  id="loginModal"
+  tabindex="-1"
+  aria-labelledby="loginModalLabel"
+  aria-hidden="true"
+  style="padding-right: 16px; display: block"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="loginModalLabel">product.name</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="onClose()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="media">
+          <img
+            src="product.image"
+            width="150"
+            height="100"
+            class="align-self-center mr-3"
+            alt="..."
+          />
+          <div class="media-body">
+            <!-- {{ product | json }} -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <!-- <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="onClose()"
+        >
+          Close
+        </button> -->
+        <button
+          [disabled]="error"
+          type="button"
+          class="btn btn-primary"
+          (click)="login()"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

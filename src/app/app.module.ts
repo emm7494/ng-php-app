@@ -13,6 +13,8 @@ import { ProductListingListComponent } from './product-listing/product-listing-l
 import { HttpClientModule } from '@angular/common/http';
 import { ProductModalComponent } from './modals/product-modal/product-modal.component';
 import { FormsModule } from '@angular/forms';
+import { LoginModalComponent } from './modals/login-modal/login-modal.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { FormsModule } from '@angular/forms';
     UserProfileComponent,
     ProductListingListComponent,
     ProductModalComponent,
+    LoginModalComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
