@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
-import { Product } from '../../shared/models/product.model';
+import { Product } from '../../shared/models/product/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

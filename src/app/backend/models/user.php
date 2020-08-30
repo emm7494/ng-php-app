@@ -8,6 +8,8 @@ class User
   public $email;
   public $firstname;
   public $lastname;
+  public $created;
+  public $modified;
 
   public function __construct($conn, $email = null,  $firstname = null, $lastname = null)
   {
@@ -67,6 +69,8 @@ class User
       $this->password = $user->password;
       $this->firstname = $user->firstname;
       $this->lastname = $user->lastname;
+      $this->created = $user->created;
+      $this->modified = $user->modified;
     }
   }
 
