@@ -4,6 +4,7 @@ import {
   faShoppingCart,
   faSignInAlt,
   faUserPlus,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
   faUserCircle = faUserCircle;
   faSignInAlt = faSignInAlt;
   faUserPlus = faUserPlus;
+  faSignOutAlt = faSignOutAlt;
   loginModalVisible = false;
   constructor() {}
 

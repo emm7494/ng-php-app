@@ -25,24 +25,10 @@ export class LoginModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.logIn();
-    this.signUp();
+    this.logIn();
     this.authService.currentUser.subscribe((currentUser: CurrentUser) => {
       this.currentUser = currentUser;
     });
-  }
-
-  signUp() {
-    this.authService
-      .signUp('Emmanuel', 'Adu Gyamfi', 'emm7494@gmail.com', 'password')
-      .subscribe(
-        (res) => {
-          this.res = res;
-        },
-        (error) => {
-          this.error = error.error;
-        }
-      );
   }
 
   logIn() {

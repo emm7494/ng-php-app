@@ -46,7 +46,7 @@
         ></span>
         <li class="nav-item mx-auto">
           <a
-            href="#"
+            style="cursor: pointer"
             routerLinkActive="active"
             class="nav-link"
             (click)="showLoginModal($event)"
@@ -55,6 +55,16 @@
           >
             LogIn
             <fa-icon [icon]="faSignInAlt" size="lg"></fa-icon>
+          </a>
+        </li>
+        <span
+          class="d-none d-sm-block mx-sm-4 text-muted"
+          [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
+        ></span>
+        <li class="nav-item mx-auto">
+          <a routerLink="/logout" routerLinkActive="active" class="nav-link">
+            LogOut
+            <fa-icon [icon]="faSignOutAlt" size="lg"></fa-icon>
           </a>
         </li>
         <span
