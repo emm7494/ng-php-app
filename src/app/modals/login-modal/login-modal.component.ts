@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthService } from '../../services/auth/auth.service';
@@ -16,14 +16,9 @@ export class LoginModalComponent implements OnInit {
   currentUser: CurrentUser;
   @Input() showModal;
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.logIn();
-  }
+  ngOnInit(): void {}
 
   logIn() {
     this.authService.logIn('emm7494@gmail.com', 'password').subscribe(

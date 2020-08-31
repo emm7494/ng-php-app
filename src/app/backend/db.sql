@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2020 at 04:21 PM
+-- Generation Time: Aug 31, 2020 at 11:47 PM
 -- Server version: 8.0.21-0ubuntu0.20.04.4
 -- PHP Version: 7.4.3
 
@@ -31,16 +31,10 @@ CREATE TABLE `cart` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `user_id`, `product_id`, `created`) VALUES
-(1, 1, 1, '2020-08-29 16:20:50');
 
 -- --------------------------------------------------------
 
@@ -97,7 +91,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `created`) VALUES
-(1, 'Emmanuel', 'Adu Gyamfi', 'emm7494@gmail.com', '$2y$10$vr/ym9PugKK2pI0Mq4p7weGYjs2H4CSO6eO.3HU8GqiC73dSaquF.', '2020-08-28 14:40:48');
+(1, 'Emmanuel', 'Adu Gyamfi', 'emm7494@gmail.com', '$2y$10$goiI0O05Q9Rn/O9uDzoLGOEcvdxPktggGlC9sT3.fQlGA1aaY7/G6', '2020-08-31 04:21:36');
 
 --
 -- Indexes for dumped tables
@@ -145,7 +139,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
