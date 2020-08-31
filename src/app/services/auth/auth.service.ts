@@ -1,37 +1,17 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthResponseData } from '../../shared/models/auth-response-data/auth-response-data.model';
 import { catchError, tap } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { CurrentUser } from '../../shared/models/user/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUser = new Subject<CurrentUser>();
+  currentUser = new BehaviorSubject<CurrentUser>(null);
 
   constructor(private http: HttpClient) {}
-  // signUp(firstname: string, lastname: string, email: string, password: string) {
-  //   return this.http
-  //     .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
-  //       firstname,
-  //       lastname,
-  //       email,
-  //       password,
-  //     })
-  //     .pipe(
-  //       catchError((errorRes) => this.handleError(errorRes)),
-  //       tap((resData) => {
-  //         this.handleAuthentication(resData);
-  //       })
-  //     );
-  // }
-
   signUp(firstname: string, lastname: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
@@ -53,6 +33,15 @@ export class AuthService {
         catchError((errorRes) => this.handleError(errorRes)),
         tap((resData) => {
           this.handleAuthentication(resData);
+        })
+      );
+  }
+  logOut() {
+    return this.http
+      .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
+      .pipe(
+        tap(() => {
+          this.currentUser.next(null);
         })
       );
   }

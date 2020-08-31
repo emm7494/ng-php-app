@@ -46,5 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   echo json_encode(array('message' => 'Invalid credentials. Login failed!', 'error' => true));
   return false;
 } else {
-  sendError();
+  // sendError();
 }

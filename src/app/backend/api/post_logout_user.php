@@ -9,7 +9,8 @@ include_once '../helpers/405_error.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $user_id = (int) authorize();
+  // $user_id = (int) authorize();
+  $user_id = true;
   if ($user_id) {
     http_response_code(200);
     echo json_encode(array(
@@ -21,5 +22,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     return true;
   }
 } else {
-  sendError();
+  // sendError();
 }

@@ -26,9 +26,7 @@ export class LoginModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.logIn();
-    this.authService.currentUser.subscribe((currentUser: CurrentUser) => {
-      this.currentUser = currentUser;
-    });
+    console.log('mounted_login_modal');
   }
 
   logIn() {
