@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-php-app';
-  loginModalVisible = false;
+  loginModalVisible = true;
+  // loginModalVisible = false;
 
   showLoginModal(status: boolean) {
     this.loginModalVisible = status;

@@ -12,5 +12,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo json_encode($stmnt->fetchall(PDO::FETCH_OBJ));
   return true;
 } else {
-  sendError();
+  // sendError();
 }

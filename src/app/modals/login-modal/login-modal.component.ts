@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/services/product/product.service';
+import {  Router } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthService } from '../../services/auth/auth.service';
@@ -19,14 +18,11 @@ export class LoginModalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private productService: ProductService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.logIn();
-    console.log('mounted_login_modal');
   }
 
   logIn() {
@@ -44,6 +40,6 @@ export class LoginModalComponent implements OnInit {
   }
 
   onClose() {
-    setTimeout(() => (this.showModal = false), 100);
+    // setTimeout(() => (this.showModal = false), 4000);
   }
 }
