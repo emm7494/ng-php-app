@@ -1,10 +1,27 @@
-export class User {
+export class CurrentUser implements User {
   constructor(
-    public id,
-    public email,
-    public firstname,
-    public lastname,
-    public created,
-    public modified
+    public id: string,
+    public email: string,
+    public firstname: string,
+    public lastname: string,
+    public created: string,
+    public modified: string,
+    private jwt: string,
+    private jwtExpirationDate: Date
   ) {}
+
+  // get token() {
+  //   if (!this.jwtExpirationDate || new Date() > this.jwtExpirationDate) {
+  //     return null;
+  //   }
+  //   return this.jwt;
+  // }
+}
+export interface User {
+  id: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  created: string;
+  modified: string;
 }

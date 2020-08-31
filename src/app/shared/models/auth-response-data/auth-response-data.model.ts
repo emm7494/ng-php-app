@@ -1,13 +1,21 @@
 import { User } from '../user/user.model';
+interface Payload {
+  iss: string;
+  aud: string;
+  iat: number;
+  nbf: number;
+  exp: number;
+  data: { user_id: string };
+}
 interface AuthData {
   user: User;
-  payload?: string;
+  payload?: Payload;
   jwt?: string;
   publicKey?: string;
 }
 
 export interface AuthResponseData {
   message: string;
-  data: AuthData[];
+  data: AuthData;
   error: string;
 }

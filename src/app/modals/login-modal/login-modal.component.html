@@ -24,14 +24,19 @@
       <div class="modal-body">
         <div class="media">
           <img
-            src="product.image"
+            src="/favicon.ico"
             width="150"
             height="100"
             class="align-self-center mr-3"
             alt="..."
           />
           <div class="media-body">
-            <!-- {{ product | json }} -->
+            {{ error | json }}
+            <hr />
+            {{ res | json }}
+            <hr />
+            {{ currentUser | json }}
+            <hr />
           </div>
         </div>
       </div>
@@ -48,7 +53,7 @@
           [disabled]="error"
           type="button"
           class="btn btn-primary"
-          (click)="login()"
+          (click)="logIn()"
         >
           Add to Cart
         </button>
