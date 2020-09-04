@@ -16,6 +16,6 @@ interface AuthData {
 
 export interface AuthResponseData {
   message: string;
-  data: AuthData;
-  error: string;
+  data?: AuthData;
+  error: boolean;
 }

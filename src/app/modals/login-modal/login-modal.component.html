@@ -1,6 +1,7 @@
 <div
   [ngClass]="{ show: showModal }"
   class="modal fade"
+  data-backdrop="static"
   id="loginModal"
   tabindex="-1"
   aria-labelledby="loginModalLabel"
@@ -17,76 +18,86 @@
           data-dismiss="modal"
           aria-label="Close"
           (click)="onClose()"
+          #closeBtn
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="media">
-          <div class="media-body">
-            <!-- {{ error | json }} -->
-            <!-- <hr /> -->
-            <!-- {{ res | json }} -->
-            <!-- <hr /> -->
-            <!-- {{ currentUser | json }} -->
-            <!-- <hr /> -->
-            <form class="">
-              <div class="form-group">
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  placeholder="Email"
-                  required
-                  autofocus
-                />
-              </div>
-              <div class="form-group">
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input
-                  type="password"
-                  id="inputPassword"
-                  class="form-control"
-                  placeholder="Password"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="text-muted" for="rememberMe">
-                  <input id="rememberMe" type="checkbox" value="remember-me" />
-                  Remember me</label
-                >
-              </div>
-              <button
-                class="btn btn-lg btn-primary btn-block"
-                type="submit"
-                [disabled]="error"
-                (click)="logIn()"
-              >
-                Login
-              </button>
-            </form>
+        <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
+          <div class="form-group">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input
+              autocomplete="off"
+              formControlName="email"
+              type="email"
+              id="inputEmail"
+              class="form-control"
+              placeholder="Email"
+              required
+              autofocus
+            />
+            <small
+              *ngIf="
+                loginForm.controls.email.invalid &&
+                (loginForm.controls.email.dirty ||
+                  loginForm.controls.email.touched)
+              "
+              class="text-danger"
+              >*Required</small
+            >
           </div>
-        </div>
+          <div class="form-group">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input
+              formControlName="password"
+              type="password"
+              id="inputPassword"
+              class="form-control"
+              placeholder="Password"
+              required
+            />
+            <small
+              *ngIf="
+                loginForm.controls.password.invalid &&
+                (loginForm.controls.password.dirty ||
+                  loginForm.controls.password.touched)
+              "
+              class="text-danger"
+              >*Required</small
+            >
+          </div>
+          <div class="form-group">
+            <label class="text-muted" for="rememberMe">
+              <input
+                formControlName="rememberMe"
+                id="rememberMe"
+                type="checkbox"
+              />
+              Remember me</label
+            >
+          </div>
+          <button
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            [disabled]="!loginForm.valid"
+          >
+            {{ loggingIn ? "Logging in..." : "Log in" }}
+          </button>
+        </form>
       </div>
       <div class="modal-footer border-0">
+        <div class="h-100">
+          <span *ngIf="res.error" class="text-danger">{{ res.message }}</span>
+          <span *ngIf="!res.error" class="text-success">{{ res.message }}</span>
+        </div>
         <!-- <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-          (click)="onClose()"
-        >
-          Close
-        </button> -->
-        <!-- <button
-          [disabled]="error"
-          type="button"
-          class="btn btn-primary"
-          (click)="logIn()"
-        >
-          Login
-        </button> -->
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            [disabled]="!loginForm.valid"
+          >
+            Log in
+          </button> -->
       </div>
     </div>
   </div>

@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private currentUserSubscription: Subscription;
 
-  @Output() showLoginModal: EventEmitter<boolean> = new EventEmitter();
+  @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private authService: AuthService) {}
 
@@ -43,14 +43,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
   onShowLoginModal(e: Event) {
-    this.showLoginModal.emit(true);
+    this.doShowLoginModal.emit(true);
   }
 
   logOut(e: Event) {
     e.preventDefault();
     this.authService.logOut().subscribe(
       (res) => {
-        this.showLoginModal.emit(false);
+        // this.doShowLoginModal.emit(false);
         console.log(res);
       },
       (error) => {

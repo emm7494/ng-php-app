@@ -18,18 +18,6 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-sm-auto">
-        <li class="nav-item mx-auto">
-          <a
-            routerLink="product-listing"
-            routerLinkActive="active"
-            class="nav-link"
-            >Products</a
-          >
-        </li>
-        <span
-          class="d-none d-sm-block mx-sm-4 text-muted"
-          [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
-        ></span>
         <ng-container *ngIf="!isAuthenticated">
           <li class="nav-item mx-auto">
             <a routerLink="signup" routerLinkActive="active" class="nav-link">
@@ -80,7 +68,7 @@
         </ng-container>
         <li class="nav-item mr-sm-2 mx-auto">
           <a
-            routerLink="shopping-cart"
+            routerLink="cart"
             routerLinkActive="active"
             class="nav-link"
           >

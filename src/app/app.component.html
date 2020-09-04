@@ -1,8 +1,9 @@
-<app-header (showLoginModal)="showLoginModal($event)"></app-header>
+<app-header (doShowLoginModal)="showLoginModal($event)"></app-header>
 <main class="container-fluid container-md">
   <app-login-modal
     [showModal]="loginModalVisible"
     *ngIf="loginModalVisible"
+    (doShowModal)="showLoginModal($event)"
   ></app-login-modal>
   <router-outlet></router-outlet>
 </main>

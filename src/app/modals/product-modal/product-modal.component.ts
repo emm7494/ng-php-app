@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../shared/models/product/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-product-modal',
@@ -12,58 +18,55 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 export class ProductModalComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
-  quantity = 0;
-  error = !this.quantity;
   product: Product = new Product();
-  total = this.product.price * this.quantity;
+  productForm: FormGroup;
+  private total: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private fb: FormBuilder
   ) {}
   ngOnInit() {
+    this.productForm = this.fb.group({
+      quantity: [1, [Validators.required, Validators.min(1)]],
+    });
+    this.productForm.controls.quantity.valueChanges.subscribe((value) => {
+      this.totalAmount = value;
+    });
     this.route.paramMap.subscribe((params: Params) => {
       this.productService
         .getProduct(params.get('product-id'))
         .subscribe((product: Product) => {
           this.product = product;
+          this.totalAmount = 1;
         });
     });
   }
-  setError(state: boolean) {
-    this.error = state;
+
+  get totalAmount(): number {
+    return this.total;
   }
-  setTotal() {
-    this.total = this.product.price * this.quantity;
+  set totalAmount(quantity: number) {
+    this.total = this.product.price * quantity;
   }
-  quantityChanged(value: number) {
-    if (value < 1) {
-      this.setError(true);
-    }
-    if (value > 0) {
-      this.setError(false);
-    }
+  get quantity(): AbstractControl {
+    return this.productForm.get('quantity');
   }
-  validateQuantity() {}
+
+  set quantityValue(value: number) {
+    this.productForm.controls.quantity.setValue(value);
+  }
+
   changeQuantity(action: string) {
     switch (action) {
       case 'plus':
-        this.quantity++;
-        this.setTotal();
-        if (this.quantity > 0) {
-          this.setError(false);
-        }
+        this.quantityValue = this.quantity.value + 1;
         break;
 
       case 'minus':
-        if (this.quantity > 0) {
-          this.quantity--;
-          this.setTotal();
-        }
-        if (this.quantity === 0) {
-          this.setError(true);
-        }
+        this.quantityValue = this.quantity.value - 1;
         break;
     }
   }
