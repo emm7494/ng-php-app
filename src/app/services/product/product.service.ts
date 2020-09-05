@@ -6,11 +6,8 @@ import {
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Product } from '../../shared/models/product/product.model';
-interface CartItem {
-  id: number;
-  quantity: number;
-}
+import {Product } from '../../shared/models/product/product.model';
+import { CartItem } from '../../shared/models/cart/cart-item.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,19 +33,32 @@ export class ProductService {
   }
 
   addCartItem(id: number, quantity: number) {
-    const cartItems: CartItem[] = this.getCartItems();
-    cartItems.push({ id, quantity });
-    this.cart.next(cartItems);
-    this.saveLocally(cartItems);
+    const oldCartItems: CartItem[] = this.getCartItems();
+
+    let notFound = true;
+    const newCartItems = oldCartItems.map((item) => {
+      if (item.id === id) {
+        notFound = false;
+        return { id: item.id, quantity: item.quantity + quantity };
+      } else {
+        return { id: item.id, quantity: item.quantity };
+      }
+    });
+    if (notFound) {
+      newCartItems.push({ id, quantity });
+    }
+    this.setCartItems(newCartItems);
   }
 
   getCartItems(): CartItem[] {
-    return this.cart.getValue();
+    return JSON.parse(localStorage.getItem('cart')) ?? [];
   }
 
-  saveLocally(cartItems: CartItem[]) {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+  setCartItems(items: CartItem[]) {
+    localStorage.setItem('cart', JSON.stringify(items));
   }
 
-  saveRemotely() {}
+  mergeCartItems(remote: CartItem[]) {
+    remote.forEach(({ id, quantity }) => this.addCartItem(id, quantity));
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product/product.service';
+import { CartItem } from '../shared/models/cart/cart-item.model';
 
 @Component({
   selector: 'app-cart',
@@ -9,11 +10,13 @@ import { ProductService } from '../services/product/product.service';
 export class CartComponent implements OnInit {
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {
-    this.productService.cart.subscribe((items) => {
-      this.productService.saveLocally(items);
-      console.log(items);
-    });
-    this.productService.addCartItem(9, 6);
+  ngOnInit(): void {}
+
+  get cartItems(): CartItem[] {
+    return this.productService.getCartItems();
+  }
+
+  set cartItems(items: CartItem[]) {
+    this.productService.setCartItems(items);
   }
 }

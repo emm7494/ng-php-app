@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../shared/models/product/product.model';
@@ -21,6 +21,7 @@ export class ProductModalComponent implements OnInit {
   product: Product = new Product();
   productForm: FormGroup;
   private total: number;
+  @ViewChild('closeBtn') closeBtn;
 
   constructor(
     private router: Router,
@@ -72,7 +73,13 @@ export class ProductModalComponent implements OnInit {
   }
 
   addToCart() {
-    console.log(this.total);
+    if (this.productForm.valid) {
+      this.productService.addCartItem(
+        +this.product.id,
+        this.productForm.value.quantity
+      );
+      this.closeBtn.nativeElement.click();
+    }
   }
 
   onClose() {

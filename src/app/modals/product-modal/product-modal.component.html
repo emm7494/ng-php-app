@@ -19,6 +19,7 @@
           data-dismiss="modal"
           aria-label="Close"
           (click)="onClose()"
+          #closeBtn
         >
           <span aria-hidden="true">&times;</span>
         </button>
@@ -78,7 +79,9 @@
               >
                 Add to Cart
               </button>
-              <span class="text-muted"> Total: GHS {{ totalAmount }} </span>
+              <span style="user-select: none" class="text-muted">
+                Total: GHS {{ totalAmount }}
+              </span>
             </form>
           </div>
         </div>
