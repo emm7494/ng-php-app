@@ -57,11 +57,13 @@ export class AuthService {
       resData.data.user.created,
       resData.data.user.modified,
       resData.data.jwt,
-      new Date(new Date().getTime() + +resData.data.payload.exp * 1000)
+      resData.data.payload.nbf,
+      resData.data.payload.exp
     );
-    localStorage.setItem('jwt', resData.data.jwt);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
     this.currentUser.next(currentUser);
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
+      console.log(items);
       localStorage.setItem('cart', JSON.stringify(items));
     });
   }

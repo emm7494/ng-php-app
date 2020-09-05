@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../shared/models/product/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { CartService } from '../../services/cart/cart.service';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -26,6 +27,7 @@ export class ProductModalComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private cartService: CartService,
     private productService: ProductService,
     private fb: FormBuilder
   ) {}
@@ -50,7 +52,7 @@ export class ProductModalComponent implements OnInit {
     return this.total;
   }
   set totalAmount(quantity: number) {
-    this.total = this.product.price * quantity;
+    this.total = +this.product.price * quantity;
   }
   get quantity(): AbstractControl {
     return this.productForm.get('quantity');
@@ -74,8 +76,8 @@ export class ProductModalComponent implements OnInit {
 
   addToCart() {
     if (this.productForm.valid) {
-      this.productService.addCartItem(
-        +this.product.id,
+      this.cartService.addCartItem(
+        this.product.id,
         this.productForm.value.quantity
       );
       this.closeBtn.nativeElement.click();

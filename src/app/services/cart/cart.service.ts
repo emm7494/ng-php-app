@@ -15,7 +15,7 @@ export class CartService {
       .pipe(catchError(this.handleError));
   }
 
-  addCartItem(productId: number, quantity: number) {
+  addCartItem(productId: string, quantity: string) {
     const oldCartItems: CartItem[] = this.getCartItems();
 
     let notFound = true;
