@@ -25,6 +25,8 @@ if ('/api/get_products' === $uri) {
   require_once '../api/post_logout_user.php';
 } elseif ('/api/get_user_profile' === $uri) {
   require_once '../api/get_user_profile.php';
+} elseif ('/api/get_user_cart' === $uri) {
+  require_once '../api/get_user_cart.php';
 } else {
   header('HTTP/1.1 404 Not Found');
 }

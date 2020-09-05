@@ -45,7 +45,6 @@ export class LoginModalComponent implements OnInit {
   }
   logIn(credentials: any) {
     this.loggingIn = true;
-    console.log(credentials.email, credentials.password);
     this.authService.logIn(credentials.email, credentials.password).subscribe(
       (res) => {
         this.loggingIn = false;

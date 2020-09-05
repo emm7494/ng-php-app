@@ -1,1 +1,9 @@
 {{ cartItems | json }}
+
+<ul
+  class="py-3 list-unstyled row row-cols-2 row-cols-sm-4 row-cols-md-4 row-cols-lg-6"
+>
+  <li *ngFor="let product of products" class="col mb-4">
+  {{product | json}}
+</li>
+</ul>

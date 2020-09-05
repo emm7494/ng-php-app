@@ -6,8 +6,8 @@ export class CurrentUser implements User {
     public lastname: string,
     public created: string,
     public modified: string,
-    private jwt: string,
-    private jwtExpirationDate: Date
+    public jwt: string,
+    public jwtExpirationDate: Date
   ) {}
 
   // get token() {

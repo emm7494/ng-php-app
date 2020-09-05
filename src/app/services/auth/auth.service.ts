@@ -4,6 +4,8 @@ import { AuthResponseData } from '../../shared/models/auth-response-data/auth-re
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { CurrentUser } from '../../shared/models/user/user.model';
+import { CartService } from '../cart/cart.service';
+import { CartItem } from '../../shared/models/cart/cart-item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ import { CurrentUser } from '../../shared/models/user/user.model';
 export class AuthService {
   currentUser = new BehaviorSubject<CurrentUser>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cartService: CartService) {}
   signUp(firstname: string, lastname: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
@@ -41,6 +43,7 @@ export class AuthService {
       .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
       .pipe(
         tap(() => {
+          localStorage.clear();
           this.currentUser.next(null);
         })
       );
@@ -56,7 +59,11 @@ export class AuthService {
       resData.data.jwt,
       new Date(new Date().getTime() + +resData.data.payload.exp * 1000)
     );
+    localStorage.setItem('jwt', resData.data.jwt);
     this.currentUser.next(currentUser);
+    this.cartService.getUserCart().subscribe((items: CartItem[]) => {
+      localStorage.setItem('cart', JSON.stringify(items));
+    });
   }
 
   private handleError(errorRes: HttpErrorResponse) {

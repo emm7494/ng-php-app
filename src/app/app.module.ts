@@ -15,6 +15,7 @@ import { ProductModalComponent } from './modals/product-modal/product-modal.comp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { SignupComponent } from './signup/signup.component';
+import { httpInterceptorProviders } from './http-interceptors/index';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { SignupComponent } from './signup/signup.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

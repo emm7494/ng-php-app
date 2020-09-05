@@ -2,6 +2,8 @@
 
 function authorize()
 {
+  // echo json_encode($_SERVER['HTTP_AUTHORIZATION']);
+  // return;
   if (isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
     $jwt = $matches[1];
     try {

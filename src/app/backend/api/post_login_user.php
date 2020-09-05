@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       'aud' => 'localhost:4200',
       'iat' => $iat,
       'nbf' => $iat + 0,
-      'exp' => $iat + 120,
+      'exp' => $iat + 1800,
       'data' => array(
         'user_id' => $user->getUser()->id
       )
