@@ -13,8 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './signup/signup.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
-import { ProductModalComponent } from './shared/components/modals/product-modal/product-modal.component';
-import { LoginModalComponent } from './shared/components/modals/login-modal/login-modal.component';
+import { ProductModalComponent } from './modals/product-modal/product-modal.component';
+import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { AutoFocusDirective } from './shared/directives/autofocus/auto-focus.directive';
 
 @NgModule({
