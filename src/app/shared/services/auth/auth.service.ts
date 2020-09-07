@@ -63,6 +63,7 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     this.currentUser.next(currentUser);
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
+      console.log(items);
       localStorage.setItem('cart', JSON.stringify(items));
     });
   }

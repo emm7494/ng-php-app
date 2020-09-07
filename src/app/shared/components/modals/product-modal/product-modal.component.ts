@@ -58,7 +58,7 @@ export class ProductModalComponent implements OnInit {
     return this.total;
   }
   set totalAmount(quantity: number) {
-    this.total = this.product.price * quantity;
+    this.total = +this.product.price * quantity;
   }
   get quantity(): AbstractControl {
     return this.productForm.get('quantity');
