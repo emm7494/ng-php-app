@@ -4,7 +4,7 @@
       "path": "./src/app"
     },
     {
-      "path": "./src/app/backend"
+      "path": "./backend"
     },
     {
       "path": "."

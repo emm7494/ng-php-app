@@ -1,7 +1,7 @@
 <div
   class="modal fade"
   data-backdrop="static"
-  [attr.data-show]=showModal
+  [attr.data-show]="showModal"
   id="productModal"
   tabindex="-1"
   aria-labelledby="productModalLabel"
@@ -40,7 +40,7 @@
                 <div class="input-group-prepend">
                   <button
                     [disabled]="!productForm.valid"
-                    (click)="changeQuantity('minus')"
+                    (click)="changeQuantity('minus', $event)"
                     class="input-group-text"
                   >
                     <fa-icon
@@ -51,9 +51,10 @@
                   </button>
                 </div>
                 <input
+                  appAutoFocus
                   autocomplete="off"
                   formControlName="quantity"
-                  type="text"
+                  type="number"
                   class="form-control text-center"
                   placeholder=""
                   aria-label="Quantity input"
@@ -61,8 +62,8 @@
                   id="quantityInput"
                 />
                 <div class="input-group-append">
-                  <span
-                    (click)="changeQuantity('plus')"
+                  <button
+                    (click)="changeQuantity('plus', $event)"
                     class="input-group-text"
                   >
                     <fa-icon
@@ -70,7 +71,7 @@
                       class="text-secondary"
                       size="1x"
                     ></fa-icon>
-                  </span>
+                  </button>
                 </div>
               </div>
               <button

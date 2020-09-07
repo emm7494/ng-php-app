@@ -68,7 +68,8 @@ export class ProductModalComponent implements OnInit {
     this.productForm.controls.quantity.setValue(value);
   }
 
-  changeQuantity(action: string) {
+  changeQuantity(action: string, e: Event) {
+    e.preventDefault();
     switch (action) {
       case 'plus':
         this.quantityValue = this.quantity.value + 1;
