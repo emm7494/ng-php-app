@@ -9,13 +9,13 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
 import { CartComponent } from './cart/cart.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ProductListingListComponent } from './product-listing/product-listing-list/product-listing-list.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductModalComponent } from './modals/product-modal/product-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginModalComponent } from './modals/login-modal/login-modal.component';
-import { SignupComponent } from './signup/signup.component';
+import { SignUpComponent } from './signup/signup.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
+import { ProductModalComponent } from './shared/components/modals/product-modal/product-modal.component';
+import { LoginModalComponent } from './shared/components/modals/login-modal/login-modal.component';
+import { AutoFocusDirective } from './shared/directives/autofocus/auto-focus.directive';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { httpInterceptorProviders } from './http-interceptors/index';
     ProductListingComponent,
     CartComponent,
     UserProfileComponent,
-    ProductListingListComponent,
     ProductModalComponent,
     LoginModalComponent,
-    SignupComponent,
+    SignUpComponent,
+    AutoFocusDirective,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +36,7 @@ import { httpInterceptorProviders } from './http-interceptors/index';
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

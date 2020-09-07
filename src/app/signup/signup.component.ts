@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
-import { CurrentUser } from '../shared/models/user/user.model';
-import { AuthResponseData } from '../shared/models/auth-response-data/auth-response-data.model';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignUpComponent implements OnInit {
   error: object;
   res: AuthResponseData;
   currentUser: CurrentUser;

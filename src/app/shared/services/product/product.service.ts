@@ -6,9 +6,10 @@ import {
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Product } from '../../shared/models/product/product.model';
-import { CartItem } from '../../shared/models/cart/cart-item.model';
-import { AuthService } from '../auth/auth.service';
+import { Product } from 'src/app/shared/models/product/product.model';
+import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+
 @Injectable({
   providedIn: 'root',
 })

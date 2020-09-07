@@ -7,10 +7,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
@@ -29,6 +29,7 @@ export class LoginModalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder
   ) {}
@@ -41,7 +42,9 @@ export class LoginModalComponent implements OnInit {
     });
   }
   onClose() {
-    setTimeout(() => this.doShowModal.emit(false), 4000);
+    setTimeout(() => {
+      this.doShowModal.emit(false);
+    }, 300);
   }
   logIn(credentials: any) {
     this.loggingIn = true;

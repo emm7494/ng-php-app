@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthResponseData } from '../../shared/models/auth-response-data/auth-response-data.model';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { CurrentUser } from '../../shared/models/user/user.model';
-import { CartService } from '../cart/cart.service';
-import { CartItem } from '../../shared/models/cart/cart-item.model';
+import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { CartService } from 'src/app/shared/services/cart/cart.service';
+import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,9 +57,10 @@ export class AuthService {
       resData.data.user.created,
       resData.data.user.modified,
       resData.data.jwt,
-      new Date(new Date().getTime() + +resData.data.payload.exp * 1000)
+      resData.data.payload.nbf,
+      resData.data.payload.exp
     );
-    localStorage.setItem('jwt', resData.data.jwt);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
     this.currentUser.next(currentUser);
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
       localStorage.setItem('cart', JSON.stringify(items));

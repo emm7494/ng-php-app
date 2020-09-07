@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import {
   Component,
   OnInit,
@@ -14,8 +15,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
-import { CurrentUser } from '../shared/models/user/user.model';
+import { CurrentUser } from 'src/app/shared/models/user/user.model';
 
 @Component({
   selector: 'app-header',
@@ -37,10 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser.subscribe(
-      (currentUser: CurrentUser) => {
-        this.isAuthenticated = !!currentUser;
+      (user: CurrentUser) => {
+        this.isAuthenticated = !!user;
       }
     );
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) ?? {};
+    this.isAuthenticated = CurrentUser.tokenNotExpired(currentUser);
   }
   onShowLoginModal(e: Event) {
     this.doShowLoginModal.emit(true);
@@ -50,7 +52,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     e.preventDefault();
     this.authService.logOut().subscribe(
       (res) => {
-        // this.doShowLoginModal.emit(false);
         console.log(res);
       },
       (error) => {

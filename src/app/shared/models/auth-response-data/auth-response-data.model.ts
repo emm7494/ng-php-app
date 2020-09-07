@@ -2,9 +2,9 @@ import { User } from '../user/user.model';
 interface Payload {
   iss: string;
   aud: string;
-  iat: number;
-  nbf: number;
-  exp: number;
+  iat: string;
+  nbf: string;
+  exp: string;
   data: { user_id: string };
 }
 interface AuthData {

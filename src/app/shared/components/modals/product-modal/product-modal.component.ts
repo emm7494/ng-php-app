@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from '../../services/product/product.service';
-import { Product } from '../../shared/models/product/product.model';
+import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { CartService } from '../../services/cart/cart.service';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ProductService } from 'src/app/shared/services/product/product.service';
+import { Product } from 'src/app/shared/models/product/product.model';
+import { CartService } from 'src/app/shared/services/cart/cart.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -24,6 +24,8 @@ export class ProductModalComponent implements OnInit {
   private total: number;
   @ViewChild('closeBtn') closeBtn;
 
+  showModal = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -31,7 +33,11 @@ export class ProductModalComponent implements OnInit {
     private productService: ProductService,
     private fb: FormBuilder
   ) {}
+
   ngOnInit() {
+    this.route.data.subscribe((data: Data) => {
+      this.showModal = data.showModal;
+    });
     this.productForm = this.fb.group({
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
@@ -77,7 +83,7 @@ export class ProductModalComponent implements OnInit {
   addToCart() {
     if (this.productForm.valid) {
       this.cartService.addCartItem(
-        +this.product.id,
+        this.product.id,
         this.productForm.value.quantity
       );
       this.closeBtn.nativeElement.click();
