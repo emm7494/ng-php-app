@@ -14,9 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     // $query = "SELECT * FROM `products` WHERE `id` IN (
     //   SELECT `product_id` FROM `cart` WHERE `user_id`= :user_id)";
-    $query = "SELECT * FROM `cart` WHERE `user_id`= :user_id";
+    $query = "SELECT * FROM `cart` WHERE `user_id`= :user_id AND `product_id`= :product_id";
     $stmnt = $conn->prepare($query);
     $stmnt->bindParam(':user_id', $user_id);
+    $stmnt->bindParam(':product_id', $_GET['product_id']);
     $stmnt->execute();
 
     http_response_code(200);

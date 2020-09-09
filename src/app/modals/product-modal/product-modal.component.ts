@@ -10,6 +10,9 @@ import {
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
+import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { StorageService } from '../../shared/services/storage/storage.service';
+import { CartItem } from '../../shared/models/cart/cart-item.model';
 
 @Component({
   selector: 'app-product-modal',
@@ -31,14 +34,15 @@ export class ProductModalComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private productService: ProductService,
-    private fb: FormBuilder
+    private formBuilder: FormBuilder,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
     this.route.data.subscribe((data: Data) => {
       this.showModal = data.showModal;
     });
-    this.productForm = this.fb.group({
+    this.productForm = this.formBuilder.group({
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
     this.productForm.controls.quantity.valueChanges.subscribe((value) => {
@@ -87,6 +91,23 @@ export class ProductModalComponent implements OnInit {
         this.product.id,
         this.productForm.value.quantity
       );
+      if (CurrentUser.tokenNotExpired(this.storageService.currentUser)) {
+        this.cartService
+          .postUserCart([
+            {
+              product_id: this.product.id,
+              quantity: this.productForm.value.quantity,
+            },
+          ])
+          .subscribe(
+            (res: CartItem[]) => {
+              console.log(res);
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+      }
       this.closeBtn.nativeElement.click();
     }
   }

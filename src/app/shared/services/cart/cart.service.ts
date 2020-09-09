@@ -19,6 +19,14 @@ export class CartService {
       .pipe(catchError((errorRes) => this.handleError(errorRes)));
   }
 
+  postUserCart(items: CartItem[]) {
+    return this.http
+      .post<CartItem[]>('http://localhost:4000/api/post_user_cart', {
+        cart: items,
+      })
+      .pipe(catchError((resError) => this.handleError(resError)));
+  }
+
   addCartItem(productId: string, quantity: number) {
     const oldCartItems: CartItem[] = this.getCartItems();
 

@@ -24,12 +24,12 @@ class Product
   public function create()
   {
     $query = "INSERT INTO " . $this->table_name . "
-    SET
-      name = :name,
-      price = :price,
-      image = :image,
-      description = :description,
-    ";
+              SET
+                name = :name,
+                price = :price,
+                image = :image,
+                description = :description,
+             ";
     $stmnt = $this->conn->prepare($query);
     $stmnt->bindParam(':name', $this->name);
     $stmnt->bindParam(':price', $this->price);

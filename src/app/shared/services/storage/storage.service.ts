@@ -8,11 +8,8 @@ import { CartItem } from '../../models/cart/cart-item.model';
 export class StorageService {
   currentUserKey = 'currentUser';
   cartItemsKey = 'cart';
-  isAuthenticated = false;
 
-  constructor() {
-    this.isAuthenticated = CurrentUser.tokenNotExpired(this.currentUser);
-  }
+  constructor() {}
 
   get currentUser(): CurrentUser {
     return JSON.parse(localStorage.getItem(this.currentUserKey)) ?? {};
