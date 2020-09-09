@@ -1,5 +1,6 @@
 export class CurrentUser implements User {
-  static tokenNotExpired({ jwtNBF, jwtEXP }) {
+  static tokenNotExpired(user: CurrentUser) {
+    const { jwtNBF, jwtEXP } = user;
     if (
       !(jwtNBF || jwtEXP) ||
       Date.now() > +jwtEXP * 1000 ||

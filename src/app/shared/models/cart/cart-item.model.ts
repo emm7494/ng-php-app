@@ -2,7 +2,7 @@ export interface CartItem {
   id?: string;
   user_id?: string;
   product_id: string;
-  quantity: string;
+  quantity: number;
   created?: string;
   modified?: string;
 }

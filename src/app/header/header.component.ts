@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { StorageService } from '../shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -33,7 +34,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser.subscribe(
@@ -41,8 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isAuthenticated = !!user;
       }
     );
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) ?? {};
-    this.isAuthenticated = CurrentUser.tokenNotExpired(currentUser);
+    this.isAuthenticated = CurrentUser.tokenNotExpired(
+      this.storageService.currentUser
+    );
   }
   onShowLoginModal(e: Event) {
     this.doShowLoginModal.emit(true);

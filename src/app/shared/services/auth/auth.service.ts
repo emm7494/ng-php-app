@@ -6,6 +6,8 @@ import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
+import { StorageService } from '../storage/storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,12 @@ import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-
 export class AuthService {
   currentUser = new BehaviorSubject<CurrentUser>(null);
 
-  constructor(private http: HttpClient, private cartService: CartService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cartService: CartService,
+    private storageService: StorageService
+  ) {}
   signUp(firstname: string, lastname: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
@@ -43,8 +50,9 @@ export class AuthService {
       .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
       .pipe(
         tap(() => {
-          localStorage.clear();
           this.currentUser.next(null);
+          this.storageService.emptyLocalStorage();
+          this.router.navigate(['/']);
         })
       );
   }
@@ -60,11 +68,10 @@ export class AuthService {
       resData.data.payload.nbf,
       resData.data.payload.exp
     );
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    this.storageService.currentUser = currentUser;
     this.currentUser.next(currentUser);
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
-      console.log(items);
-      localStorage.setItem('cart', JSON.stringify(items));
+      this.cartService.addCartItems(items);
     });
   }
 

@@ -3,19 +3,23 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
   getUserCart() {
     return this.http
       .get<CartItem[]>('http://localhost:4000/api/get_user_cart')
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((errorRes) => this.handleError(errorRes)));
   }
 
-  addCartItem(productId: string, quantity: string) {
+  addCartItem(productId: string, quantity: number) {
     const oldCartItems: CartItem[] = this.getCartItems();
 
     let notFound = true;
@@ -36,12 +40,18 @@ export class CartService {
     this.setCartItems(newCartItems);
   }
 
+  addCartItems(items: CartItem[]) {
+    items.forEach(({ product_id, quantity }) =>
+      this.addCartItem(product_id, +quantity)
+    );
+  }
+
   getCartItems(): CartItem[] {
-    return JSON.parse(localStorage.getItem('cart')) ?? [];
+    return this.storageService.cartItems;
   }
 
   setCartItems(items: CartItem[]) {
-    localStorage.setItem('cart', JSON.stringify(items));
+    this.storageService.cartItems = items;
   }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);

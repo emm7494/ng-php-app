@@ -8,7 +8,6 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class ProductService {
   cart = new BehaviorSubject<CartItem[]>([]);
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
   getAllProducts() {
     return this.http
       .get<Product[]>('http://localhost:4000/api/get_products')
