@@ -24,21 +24,10 @@ export class StorageService {
     localStorage.clear();
   }
   get cartItems(): CartItem[] {
-    if (this.isAuthenticated) {
-      return JSON.parse(localStorage.getItem('cart')) ?? [];
-    }
-    return JSON.parse(sessionStorage.getItem('cart')) ?? [];
+    return JSON.parse(localStorage.getItem('cart')) ?? [];
   }
 
   set cartItems(items: CartItem[]) {
-    if (this.isAuthenticated) {
-      console.log(this.isAuthenticated);
-      localStorage.setItem('cart', JSON.stringify(items));
-      console.log('local', items);
-    } else {
-      console.log(this.isAuthenticated);
-      sessionStorage.setItem('cart', JSON.stringify(items));
-      console.log('session', items);
-    }
+    localStorage.setItem('cart', JSON.stringify(items));
   }
 }
