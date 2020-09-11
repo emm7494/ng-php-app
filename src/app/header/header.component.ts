@@ -34,10 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(
-    private authService: AuthService,
-    private storageService: StorageService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser.subscribe(
@@ -45,10 +42,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isAuthenticated = !!user;
       }
     );
-    this.isAuthenticated = CurrentUser.tokenNotExpired(
-      this.storageService.currentUser
-    );
   }
+
   onShowLoginModal(e: Event) {
     this.doShowLoginModal.emit(true);
   }

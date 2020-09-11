@@ -21,7 +21,7 @@
         <ng-container *ngIf="!isAuthenticated">
           <li class="nav-item mx-auto">
             <a routerLink="signup" routerLinkActive="active" class="nav-link">
-              SignUp
+              Sign Up
               <fa-icon [icon]="faUserPlus" size="lg"></fa-icon>
             </a>
           </li>
@@ -40,7 +40,7 @@
               data-toggle="modal"
               data-target="#loginModal"
             >
-              LogIn
+              Log In
               <fa-icon [icon]="faSignInAlt" size="lg"></fa-icon>
             </a>
           </li>
@@ -57,7 +57,7 @@
               class="nav-link"
               (click)="logOut($event)"
             >
-              LogOut
+              Log Out
               <fa-icon [icon]="faSignOutAlt" size="lg"></fa-icon>
             </a>
           </li>
@@ -67,11 +67,7 @@
           ></span>
         </ng-container>
         <li class="nav-item mr-sm-2 mx-auto">
-          <a
-            routerLink="cart"
-            routerLinkActive="active"
-            class="nav-link"
-          >
+          <a routerLink="cart" routerLinkActive="active" class="nav-link">
             <fa-icon [icon]="faShoppingCart" size="1x"></fa-icon>
           </a>
         </li>

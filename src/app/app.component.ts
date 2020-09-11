@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   // loginModalVisible = true;
   loginModalVisible = false;
-  ngOnInit() {
-    
+
+  constructor(private authService: AuthService) {
+    authService.mountCurrentUser();
   }
+
+  ngOnInit() {}
 
   showLoginModal(status: boolean) {
     this.loginModalVisible = status;

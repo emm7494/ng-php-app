@@ -10,9 +10,9 @@ import {
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
-import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { StorageService } from '../../shared/services/storage/storage.service';
 import { CartItem } from '../../shared/models/cart/cart-item.model';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -35,7 +35,7 @@ export class ProductModalComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
-    private storageService: StorageService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -91,7 +91,7 @@ export class ProductModalComponent implements OnInit {
         this.product.id,
         this.productForm.value.quantity
       );
-      if (CurrentUser.tokenNotExpired(this.storageService.currentUser)) {
+      if (this.authService.currentUser.value) {
         this.cartService
           .postUserCart([
             {

@@ -45,12 +45,13 @@ export class AuthService {
         })
       );
   }
+
   logOut() {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
       .pipe(
         tap(() => {
-          this.currentUser.next(null);
+          this.unMountCurrentUser();
           this.storageService.emptyLocalStorage();
           this.router.navigate(['/']);
         })
@@ -69,10 +70,17 @@ export class AuthService {
       resData.data.payload.exp
     );
     this.storageService.currentUser = currentUser;
-    this.currentUser.next(currentUser);
+    this.mountCurrentUser();
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
       this.cartService.addCartItems(items);
     });
+  }
+
+  mountCurrentUser() {
+    this.currentUser.next(this.storageService.currentUser);
+  }
+  unMountCurrentUser() {
+    this.currentUser.next(null);
   }
 
   private handleError(errorRes: HttpErrorResponse) {

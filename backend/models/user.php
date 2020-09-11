@@ -78,6 +78,7 @@ class User
   {
     $this->password = password_hash($password, PASSWORD_BCRYPT);
   }
+
   public function checkPassword($password)
   {
 

@@ -12,7 +12,11 @@ export class StorageService {
   constructor() {}
 
   get currentUser(): CurrentUser {
-    return JSON.parse(localStorage.getItem(this.currentUserKey)) ?? {};
+    const storedUser = JSON.parse(localStorage.getItem(this.currentUserKey));
+    if (storedUser && CurrentUser.tokenNotExpired(storedUser)) {
+      return storedUser;
+    }
+    return null;
   }
   set currentUser(user: CurrentUser) {
     localStorage.setItem(this.currentUserKey, JSON.stringify(user));
