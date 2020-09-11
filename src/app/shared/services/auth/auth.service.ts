@@ -76,7 +76,7 @@ export class AuthService {
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
       this.cartService.addCartItems(items, false);
     });
-    this.autoLogout(5000);
+    this.setAutoLogoutTimer(5000);
   }
 
   mountCurrentUser() {
@@ -86,7 +86,7 @@ export class AuthService {
     this.currentUser.next(null);
   }
 
-  autoLogout(TTL: number) {
+  setAutoLogoutTimer(TTL: number) {
     if (this.currentUser.value) {
       clearTimeout(this.autoLogoutTimerID);
       this.autoLogoutTimerID = setTimeout(() => {
