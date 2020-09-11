@@ -9,11 +9,11 @@ import { AuthService } from './shared/services/auth/auth.service';
 export class AppComponent implements OnInit {
   loginModalVisible = false;
 
-  constructor(private authService: AuthService) {
-    authService.mountCurrentUser();
-  }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.mountCurrentUser();
+  }
 
   showLoginModal(status: boolean) {
     this.loginModalVisible = status;
