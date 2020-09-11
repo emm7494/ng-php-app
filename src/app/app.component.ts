@@ -7,7 +7,6 @@ import { AuthService } from './shared/services/auth/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  // loginModalVisible = true;
   loginModalVisible = false;
 
   constructor(private authService: AuthService) {
