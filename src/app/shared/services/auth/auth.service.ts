@@ -76,7 +76,9 @@ export class AuthService {
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
       this.cartService.addCartItems(items, false);
     });
-    this.setAutoLogoutTimer(5000);
+    this.setAutoLogoutTimer(
+      +this.currentUser.value.jwtEXP * 1000 - new Date().getTime()
+    );
   }
 
   mountCurrentUser() {
@@ -100,7 +102,6 @@ export class AuthService {
         );
       }, TTL);
     }
-    console.log(this.autoLogoutTimerID);
   }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);

@@ -3,8 +3,8 @@ export class CurrentUser implements User {
     const { jwtNBF, jwtEXP } = user;
     if (
       !(jwtNBF || jwtEXP) ||
-      Date.now() > +jwtEXP * 1000 ||
-      Date.now() < +jwtNBF * 1000
+      new Date().getTime() > +jwtEXP * 1000 ||
+      new Date().getTime() < +jwtNBF * 1000
     ) {
       return false;
     }
@@ -19,15 +19,15 @@ export class CurrentUser implements User {
     public created: string,
     public modified: string,
     public jwt: string,
-    private jwtNBF: string,
-    private jwtEXP: string
+    public jwtNBF: string,
+    public jwtEXP: string
   ) {}
 
   get token() {
     if (
       !(this.jwtEXP || this.jwtNBF) ||
-      Date.now() > +this.jwtEXP * 1000 ||
-      Date.now() < +this.jwtNBF * 1000
+      new Date().getTime() > +this.jwtEXP * 1000 ||
+      new Date().getTime() < +this.jwtNBF * 1000
     ) {
       return null;
     }

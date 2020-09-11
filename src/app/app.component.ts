@@ -13,7 +13,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.mountCurrentUser();
-    this.authService.setAutoLogoutTimer(5000);
+    if (this.authService.currentUser.value) {
+      this.authService.setAutoLogoutTimer(
+        +this.authService.currentUser.value.jwtEXP * 1000 - new Date().getTime()
+      );
+    }
   }
 
   showLoginModal(status: boolean) {
