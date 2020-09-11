@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { AuthService } from '../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,17 +10,22 @@ import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 })
 export class CartComponent implements OnInit {
   products: CartItem[] = [];
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.cartService.getUserCart().subscribe(
-      (products: CartItem[]) => {
-        this.products = products;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    if (this.authService.currentUser.value) {
+      this.cartService.getUserCart().subscribe(
+        (products: CartItem[]) => {
+          this.products = products;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   get cartItems(): CartItem[] {

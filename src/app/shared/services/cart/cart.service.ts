@@ -48,10 +48,13 @@ export class CartService {
     this.setCartItems(newCartItems);
   }
 
-  addCartItems(items: CartItem[]) {
-    items.forEach(({ product_id, quantity }) =>
-      this.addCartItem(product_id, +quantity)
-    );
+  addCartItems(items: CartItem[], mergeItems = false) {
+    if (mergeItems) {
+      items.forEach(({ product_id, quantity }) =>
+        this.addCartItem(product_id, +quantity)
+      );
+    }
+    this.setCartItems(items);
   }
 
   getCartItems(): CartItem[] {

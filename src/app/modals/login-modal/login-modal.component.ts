@@ -57,7 +57,6 @@ export class LoginModalComponent implements OnInit {
         }, 1000);
         setTimeout(() => {
           this.closeBtn.nativeElement.click();
-          this.router.navigate(['/']);
         }, 1000);
       },
       (error) => {

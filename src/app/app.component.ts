@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.mountCurrentUser();
+    this.authService.autoLogout(5000);
   }
 
   showLoginModal(status: boolean) {

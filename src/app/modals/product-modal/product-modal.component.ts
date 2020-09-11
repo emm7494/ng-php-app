@@ -10,7 +10,6 @@ import {
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
-import { StorageService } from '../../shared/services/storage/storage.service';
 import { CartItem } from '../../shared/models/cart/cart-item.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 

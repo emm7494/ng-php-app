@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  autoLogoutTimerID: any;
   currentUser = new BehaviorSubject<CurrentUser>(null);
 
   constructor(
@@ -53,6 +54,7 @@ export class AuthService {
         tap(() => {
           this.unMountCurrentUser();
           this.storageService.emptyLocalStorage();
+          clearTimeout(this.autoLogoutTimerID);
           this.router.navigate(['/']);
         })
       );
@@ -72,8 +74,9 @@ export class AuthService {
     this.storageService.currentUser = currentUser;
     this.mountCurrentUser();
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
-      this.cartService.addCartItems(items);
+      this.cartService.addCartItems(items, false);
     });
+    this.autoLogout(5000);
   }
 
   mountCurrentUser() {
@@ -83,6 +86,22 @@ export class AuthService {
     this.currentUser.next(null);
   }
 
+  autoLogout(TTL: number) {
+    if (this.currentUser.value) {
+      clearTimeout(this.autoLogoutTimerID);
+      this.autoLogoutTimerID = setTimeout(() => {
+        this.logOut().subscribe(
+          (res) => {
+            console.log(res);
+          },
+          (errorRes) => {
+            console.error(errorRes);
+          }
+        );
+      }, TTL);
+    }
+    console.log(this.autoLogoutTimerID);
+  }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);
   }
