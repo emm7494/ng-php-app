@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AuthService } from './shared/services/auth/auth.service';
 
 @Component({
@@ -6,9 +12,7 @@ import { AuthService } from './shared/services/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  loginModalVisible = false;
-
+export class AppComponent implements OnInit, OnChanges {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
@@ -19,8 +23,5 @@ export class AppComponent implements OnInit {
       );
     }
   }
-
-  showLoginModal(status: boolean) {
-    this.loginModalVisible = status;
-  }
+  ngOnChanges() {}
 }

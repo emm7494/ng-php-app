@@ -27,7 +27,7 @@
             [icon]="faCartPlus"
             data-toggle="modal"
             data-target="#productModal"
-            [routerLink]="['product-modal', product.id]"
+            [routerLink]="[{ outlets: { modal: ['product', product.id] } }]"
           ></fa-icon>
         </p>
       </div>

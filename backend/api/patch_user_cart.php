@@ -1,8 +1,4 @@
-<?php //global $conn;
-//$sql = "SELECT * FROM `products` WHERE `id` IN (SELECT `item` FROM `cart`)";
-//$result = $conn->query($sql);
-//echo json_encode($result->fetchall(PDO::FETCH_ASSOC));
-
+<?php
 include_once '../models/user.php';
 include_once '../db.php';
 include_once '../helpers/token.php';
@@ -13,14 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
   $user_id = (int) authorize();
   if ($user_id) {
     $data = json_decode(file_get_contents("php://input"));
-    // echo json_encode($data);
-    // return;
     $db = new Database();
     $conn = $db->connect();
     foreach ($data->cart as $item) {
-      // echo json_encode($item);
-      // $query = "SELECT * FROM `products` WHERE `id` IN (
-      //   SELECT `product_id` FROM `cart` WHERE `user_id`= :user_id)";
       $select_query = "SELECT *
               FROM `cart`
               WHERE `user_id`= :user_id AND `product_id` = :product_id";

@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
@@ -24,8 +17,7 @@ export class LoginModalComponent implements OnInit {
 
   @ViewChild('closeBtn') closeBtn;
 
-  @Input() showModal;
-  @Output() doShowModal: EventEmitter<boolean> = new EventEmitter();
+  previousURLPath: string;
 
   constructor(
     private router: Router,
@@ -41,9 +33,22 @@ export class LoginModalComponent implements OnInit {
     });
   }
   onClose() {
-    setTimeout(() => {
-      this.doShowModal.emit(false);
-    }, 300);
+    const primaryURL = this.router.routerState.snapshot.url.split(
+      /\/([\w-~.]+)\(/gi
+    )[1];
+    const primary = primaryURL ? primaryURL : null;
+    setTimeout(
+      () =>
+        this.router.navigate([
+          {
+            outlets: {
+              primary,
+              modal: null,
+            },
+          },
+        ]),
+      100
+    );
   }
   logIn(credentials: any) {
     this.loggingIn = true;
@@ -57,6 +62,7 @@ export class LoginModalComponent implements OnInit {
         }, 1000);
         setTimeout(() => {
           this.closeBtn.nativeElement.click();
+          setTimeout(() => this.router.navigate(['..']), 100);
         }, 1000);
       },
       (error) => {

@@ -16,7 +16,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
-import { StorageService } from '../shared/services/storage/storage.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -33,8 +34,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private currentUserSubscription: Subscription;
 
   @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
+  currentURLPath: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser.subscribe(
@@ -42,11 +44,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isAuthenticated = !!user;
       }
     );
+
+    this.router.events
+      .pipe(filter((event): boolean => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentURLPath = event.urlAfterRedirects;
+      });
   }
 
-  onShowLoginModal(e: Event) {
-    this.doShowLoginModal.emit(true);
-  }
 
   logOut(e: Event) {
     e.preventDefault();

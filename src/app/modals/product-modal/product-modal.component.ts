@@ -112,6 +112,21 @@ export class ProductModalComponent implements OnInit {
   }
 
   onClose() {
-    setTimeout(() => this.router.navigate(['..']), 100);
+    const primaryURL = this.router.routerState.snapshot.url.split(
+      /\/([\w-~.]+)\(/gi
+    )[1];
+    const primary = primaryURL ? primaryURL : null;
+    setTimeout(
+      () =>
+        this.router.navigate([
+          {
+            outlets: {
+              primary,
+              modal: null,
+            },
+          },
+        ]),
+      100
+    );
   }
 }

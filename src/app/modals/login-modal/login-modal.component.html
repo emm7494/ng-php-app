@@ -1,7 +1,6 @@
 <div
   class="modal fade"
   data-backdrop="static"
-  [attr.data-show]="showModal"
   id="loginModal"
   tabindex="-1"
   aria-labelledby="loginModalLabel"
@@ -88,13 +87,6 @@
           <span *ngIf="res.error" class="text-danger">{{ res.message }}</span>
           <span *ngIf="!res.error" class="text-success">{{ res.message }}</span>
         </div>
-        <!-- <button
-            class="btn btn-lg btn-primary btn-block"
-            type="submit"
-            [disabled]="!loginForm.valid"
-          >
-            Log in
-          </button> -->
       </div>
     </div>
   </div>

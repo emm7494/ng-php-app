@@ -36,9 +36,9 @@
               style="cursor: pointer"
               routerLinkActive="active"
               class="nav-link"
-              (click)="onShowLoginModal($event)"
               data-toggle="modal"
               data-target="#loginModal"
+              [routerLink]="[{ outlets: { modal: ['login'] } }]"
             >
               Log In
               <fa-icon [icon]="faSignInAlt" size="lg"></fa-icon>
