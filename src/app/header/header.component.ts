@@ -1,18 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+
 import {
   faUserCircle,
   faShoppingCart,
+  faSignInAlt,
+  faUserPlus,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   faShoppingCart = faShoppingCart;
   faUserCircle = faUserCircle;
-  constructor() {}
+  faSignInAlt = faSignInAlt;
+  faUserPlus = faUserPlus;
+  faSignOutAlt = faSignOutAlt;
+  isAuthenticated = false;
+  private currentUserSubscription: Subscription;
 
-  ngOnInit(): void {}
+  @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
+  currentURLPath: any;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.currentUserSubscription = this.authService.currentUser.subscribe(
+      (user: CurrentUser) => {
+        this.isAuthenticated = !!user;
+      }
+    );
+
+    this.router.events
+      .pipe(filter((event): boolean => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentURLPath = event.urlAfterRedirects;
+      });
+  }
+
+
+  logOut(e: Event) {
+    e.preventDefault();
+    this.authService.logOut().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+  }
 }

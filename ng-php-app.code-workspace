@@ -1,13 +1,13 @@
 {
   "folders": [
     {
-      "path": "./src"
+      "path": "./src/app"
+    },
+    {
+      "path": "./backend"
     },
     {
       "path": "."
     }
-  ],
-  "settings": {
-    "deno.enable": false
-  }
+  ]
 }
