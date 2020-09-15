@@ -6,57 +6,32 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 })
 export class RouterService {
   currentURL: string;
-  pageReloaded = false;
 
   constructor(private router: Router) {
-    console.log('ready..');
-    // console.log('router: ', this.router.routerState.snapshot.url);
-    // console.log('route: ', this.route.snapshot.url);
-    // const primaryURL = this.router.routerState.snapshot.url.split(
-    //   /\/([\w-~.]+)\(/gi
-    // )[1];
-    // console.log(primaryURL);
-    // router.events.subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     console.log(event.url);
-    //     console.log(router.navigated);
-    //   }
-    // });
     this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd) {
+      if (e instanceof NavigationStart) {
         this.currentURL = e.url;
-        if (!this.pageReloaded) {
+        if (!this.router.navigated) {
           this.unSetAuxiliaryRoute();
         }
-      }
-      if (e instanceof NavigationStart) {
-        this.pageReloaded = this.router.navigated;
       }
     });
   }
 
   unSetAuxiliaryRoute() {
-    // console.log('currentURL @ service: ', this.currentURL);
-    // const primaryURL = this.router.routerState.snapshot.url.split(
-    //   /\/([\w-~.]+)\(/gi
-    // )[1];
-    // const primaryURL = this.currentURL.split(/(?:\/)([\w-~.]+)(?:\()/gi)[1];
+    console.log('currentURL: ', this.currentURL);
     const matchedURLGroups = this.currentURL.match(
       /(?<primaryPath>(?:\/[-\w-~.]*)+)\((?<auxiliaryPath>\w*:(?:[-\w~.]*\/?)+)\)/
     )?.groups;
+    console.log('matched: ', matchedURLGroups);
     if (matchedURLGroups) {
-      const { primaryPath } = matchedURLGroups;
-      const parts = primaryPath.split('/')[1];
-      const primary = !!parts ? parts : null;
+      const {
+        primaryPath: primary,
+        auxiliaryPath: auxiliary,
+      } = matchedURLGroups;
       setTimeout(() => {
-        return this.router.navigate([
-          {
-            outlets: {
-              primary,
-              modal: null,
-            },
-          },
-        ]);
+        console.log('auxiliaryPath', auxiliary);
+        return this.router.navigateByUrl(primary);
       }, 100);
     }
   }

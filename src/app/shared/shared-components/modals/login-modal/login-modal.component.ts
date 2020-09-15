@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { RouterService } from '../../../../services/router/router.service';
+import { RouterService } from 'src/app/shared/services/router/router.service';
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',

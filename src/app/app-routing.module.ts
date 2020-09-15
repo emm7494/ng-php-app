@@ -4,14 +4,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductListingComponent } from './components/product-listing/product-listing.component';
 import { SignUpComponent } from './components/signup/signup.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { LogInModalComponent } from './shared/components/shared-components/modals/login-modal/login-modal.component';
-import { ProductModalComponent } from './shared/components/shared-components/modals/product-modal/product-modal.component';
-
-// export function htmlFiles(url: UrlSegment[]) {
-//   return url.length > 0 && url[url.length - 1].path.endsWith('login')
-//     ? { consumed: url }
-//     : null;
-// }
+import { LogInModalComponent } from './shared/shared-components/modals/login-modal/login-modal.component';
+import { ProductModalComponent } from './shared/shared-components/modals/product-modal/product-modal.component';
 
 const routes: Routes = [
   {

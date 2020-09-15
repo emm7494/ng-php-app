@@ -3,8 +3,6 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 
 import {
@@ -33,7 +31,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private currentUserSubscription: Subscription;
 
-  @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
   currentURLPath: any;
 
   constructor(private authService: AuthService, private router: Router) {}

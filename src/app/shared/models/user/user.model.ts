@@ -33,7 +33,7 @@ export class CurrentUser implements User {
     }
     return this.jwt;
   }
-  // new Date(new Date().getTime() + +resData.data.payload.exp * 1000)
+
   get jwtExpirationDate(): Date {
     return new Date(+this.jwtEXP * 1000);
   }

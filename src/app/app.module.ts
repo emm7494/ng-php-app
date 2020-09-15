@@ -7,8 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { httpInterceptorProviders } from './http-interceptors/index';
-import { SharedComponentsModule } from './shared/components/shared-components/shared-components.module';
 import { ComponentsModule } from './components/components.module';
+import { SharedComponentsModule } from './shared/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [AppComponent],

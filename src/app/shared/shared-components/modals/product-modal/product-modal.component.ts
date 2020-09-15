@@ -12,7 +12,7 @@ import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
-import { RouterService } from '../../../../services/router/router.service';
+import { RouterService } from 'src/app/shared/services/router/router.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -40,7 +40,6 @@ export class ProductModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.routerService.unSetAuxiliaryRoute();
     this.route.data.subscribe((data: Data) => {
       this.showModal = data.showModal;
     });
