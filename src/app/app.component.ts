@@ -1,19 +1,19 @@
-import {
-  Component,
-  EventEmitter,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AuthService } from './shared/services/auth/auth.service';
+import { NavigationStart, Router } from '@angular/router';
+import { RouterService } from './shared/services/router/router.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnChanges {
-  constructor(private authService: AuthService) {}
+export class AppComponent implements OnInit, AfterViewInit {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private routerService: RouterService
+  ) {}
 
   ngOnInit() {
     this.authService.mountCurrentUser();
@@ -23,5 +23,6 @@ export class AppComponent implements OnInit, OnChanges {
       );
     }
   }
-  ngOnChanges() {}
+
+  ngAfterViewInit() {}
 }

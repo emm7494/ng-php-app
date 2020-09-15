@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { RouterService } from '../../../../services/router/router.service';
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss'],
 })
-export class LoginModalComponent implements OnInit {
+export class LogInModalComponent implements OnInit {
   res: AuthResponseData = { message: '', error: false };
   currentUser: CurrentUser;
   loginForm: FormGroup;
@@ -22,7 +23,8 @@ export class LoginModalComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private routerService: RouterService
   ) {}
 
   ngOnInit(): void {
@@ -33,22 +35,7 @@ export class LoginModalComponent implements OnInit {
     });
   }
   onClose() {
-    const primaryURL = this.router.routerState.snapshot.url.split(
-      /\/([\w-~.]+)\(/gi
-    )[1];
-    const primary = primaryURL ? primaryURL : null;
-    setTimeout(
-      () =>
-        this.router.navigate([
-          {
-            outlets: {
-              primary,
-              modal: null,
-            },
-          },
-        ]),
-      100
-    );
+    this.routerService.unSetAuxiliaryRoute();
   }
   logIn(credentials: any) {
     this.loggingIn = true;

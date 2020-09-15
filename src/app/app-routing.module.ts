@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { SignUpComponent } from './signup/signup.component';
-import { ProductModalComponent } from './modals/product-modal/product-modal.component';
-import { ProductListingComponent } from './product-listing/product-listing.component';
-import { LoginModalComponent } from './modals/login-modal/login-modal.component';
+import { CartComponent } from './components/cart/cart.component';
+import { ProductListingComponent } from './components/product-listing/product-listing.component';
+import { SignUpComponent } from './components/signup/signup.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LogInModalComponent } from './shared/components/shared-components/modals/login-modal/login-modal.component';
+import { ProductModalComponent } from './shared/components/shared-components/modals/product-modal/product-modal.component';
 
 // export function htmlFiles(url: UrlSegment[]) {
 //   return url.length > 0 && url[url.length - 1].path.endsWith('login')
@@ -16,7 +16,7 @@ import { LoginModalComponent } from './modals/login-modal/login-modal.component'
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginModalComponent,
+    component: LogInModalComponent,
     outlet: 'modal',
   },
   {

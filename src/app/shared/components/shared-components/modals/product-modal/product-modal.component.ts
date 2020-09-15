@@ -10,8 +10,9 @@ import {
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
-import { CartItem } from '../../shared/models/cart/cart-item.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { RouterService } from '../../../../services/router/router.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -34,10 +35,12 @@ export class ProductModalComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private routerService: RouterService
   ) {}
 
   ngOnInit() {
+    // this.routerService.unSetAuxiliaryRoute();
     this.route.data.subscribe((data: Data) => {
       this.showModal = data.showModal;
     });
@@ -112,21 +115,6 @@ export class ProductModalComponent implements OnInit {
   }
 
   onClose() {
-    const primaryURL = this.router.routerState.snapshot.url.split(
-      /\/([\w-~.]+)\(/gi
-    )[1];
-    const primary = primaryURL ? primaryURL : null;
-    setTimeout(
-      () =>
-        this.router.navigate([
-          {
-            outlets: {
-              primary,
-              modal: null,
-            },
-          },
-        ]),
-      100
-    );
+    this.routerService.unSetAuxiliaryRoute();
   }
 }
