@@ -1,30 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { RouterService } from 'src/app/shared/services/router/router.service';
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class LogInModalComponent implements OnInit {
+export class LogInComponent implements OnInit, AfterViewInit {
   res: AuthResponseData = { message: '', error: false };
   currentUser: CurrentUser;
   loginForm: FormGroup;
   loggingIn = false;
 
-  @ViewChild('closeBtn') closeBtn;
-
-  previousURLPath: string;
+  nextRoute: null | string;
+  modalJQueryElement: JQuery<HTMLElement>;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private routerService: RouterService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +31,22 @@ export class LogInModalComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: true,
     });
+    this.nextRoute = this.route.snapshot.queryParams.next;
+    console.log('next after login: ', this.route.snapshot.queryParams.next);
   }
+  ngAfterViewInit() {
+    this.modalJQueryElement = $('#loginModal');
+    this.modalJQueryElement.on('shown.bs.modal', () => {
+      // $('#inputEmail').trigger('focus');
+    });
+    this.modalJQueryElement.on('hidden.bs.modal', () => {
+      this.router.navigate(['..']);
+    });
+    this.modalJQueryElement.modal('show');
+  }
+
   onClose() {
-    this.routerService.unSetAuxiliaryRoute();
+    this.modalJQueryElement.modal('hide');
   }
   logIn(credentials: any) {
     this.loggingIn = true;
@@ -44,13 +55,8 @@ export class LogInModalComponent implements OnInit {
         this.loggingIn = false;
         this.res = res;
         console.log(res);
-        setTimeout(() => {
-          this.res = { message: '', error: false };
-        }, 1000);
-        setTimeout(() => {
-          this.closeBtn.nativeElement.click();
-          setTimeout(() => this.router.navigate(['..']), 100);
-        }, 1000);
+        this.res = { message: '', error: false };
+        this.router.navigate([this.route.snapshot.queryParams.next]);
       },
       (error) => {
         this.loggingIn = false;

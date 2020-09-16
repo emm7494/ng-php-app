@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AutoFocusDirective } from './autofocus/auto-focus.directive';
+import { AutoFocusDirective } from './auto-focus/auto-focus.directive';
 
 @NgModule({
   declarations: [AutoFocusDirective],

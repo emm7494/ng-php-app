@@ -15,11 +15,11 @@ import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { RouterService } from 'src/app/shared/services/router/router.service';
 
 @Component({
-  selector: 'app-product-modal',
-  templateUrl: './product-modal.component.html',
-  styleUrls: ['./product-modal.component.scss'],
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss'],
 })
-export class ProductModalComponent implements OnInit {
+export class ProductComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
   product: Product = new Product();
