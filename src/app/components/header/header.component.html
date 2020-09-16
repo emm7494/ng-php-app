@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <div class="container-fluid container-md">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" routerLink="/">
       <img src="/favicon.ico" alt="" />
     </a>
-    <span class="text-muted"> v0.4.0 </span>
+    <span class="text-muted"> v0.5.0 </span>
     <button
       class="navbar-toggler"
       type="button"
@@ -33,6 +33,7 @@
         <ng-container *ngIf="!isAuthenticated">
           <li class="nav-item mx-auto">
             <a
+              #loginAnchor
               style="cursor: pointer"
               routerLinkActive="active"
               class="nav-link"

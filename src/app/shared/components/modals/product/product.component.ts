@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Data, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import {
   AbstractControl,
@@ -10,23 +10,23 @@ import {
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
-import { CartItem } from '../../shared/models/cart/cart-item.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
-  selector: 'app-product-modal',
-  templateUrl: './product-modal.component.html',
-  styleUrls: ['./product-modal.component.scss'],
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss'],
 })
-export class ProductModalComponent implements OnInit {
+export class ProductComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
-  product: Product = new Product();
+  product: Product;
   productForm: FormGroup;
   private total: number;
-  @ViewChild('closeBtn') closeBtn;
 
-  showModal = false;
+  @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
   constructor(
     private router: Router,
@@ -34,13 +34,10 @@ export class ProductModalComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.showModal = data.showModal;
-    });
     this.productForm = this.formBuilder.group({
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
@@ -86,10 +83,6 @@ export class ProductModalComponent implements OnInit {
 
   addToCart() {
     if (this.productForm.valid) {
-      this.cartService.addCartItem(
-        this.product.id,
-        this.productForm.value.quantity
-      );
       if (this.authService.currentUser.value) {
         this.cartService
           .postUserCart([
@@ -101,32 +94,27 @@ export class ProductModalComponent implements OnInit {
           .subscribe(
             (res: CartItem[]) => {
               console.log(res);
+              this.cartService.addCartItem(
+                this.product.id,
+                this.productForm.value.quantity
+              );
+              // this.modalComponent.onClose();
             },
             (error) => {
               console.error(error);
+              this.modalComponent.onClose();
+            },
+            () => {
+              this.modalComponent.onClose();
             }
           );
+      } else {
+        this.cartService.addCartItem(
+          this.product.id,
+          this.productForm.value.quantity
+        );
+        this.modalComponent.onClose();
       }
-      this.closeBtn.nativeElement.click();
     }
-  }
-
-  onClose() {
-    const primaryURL = this.router.routerState.snapshot.url.split(
-      /\/([\w-~.]+)\(/gi
-    )[1];
-    const primary = primaryURL ? primaryURL : null;
-    setTimeout(
-      () =>
-        this.router.navigate([
-          {
-            outlets: {
-              primary,
-              modal: null,
-            },
-          },
-        ]),
-      100
-    );
   }
 }

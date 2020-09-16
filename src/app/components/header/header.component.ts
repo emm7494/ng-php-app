@@ -1,11 +1,5 @@
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import {
   faUserCircle,
@@ -16,8 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -32,11 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faSignOutAlt = faSignOutAlt;
   isAuthenticated = false;
   private currentUserSubscription: Subscription;
+  @ViewChild('loginAnchor') loginAnchor;
 
-  @Output() doShowLoginModal: EventEmitter<boolean> = new EventEmitter();
-  currentURLPath: any;
-
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser.subscribe(
@@ -44,15 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isAuthenticated = !!user;
       }
     );
-
-    this.router.events
-      .pipe(filter((event): boolean => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.currentURLPath = event.urlAfterRedirects;
-      });
   }
-
-
   logOut(e: Event) {
     e.preventDefault();
     this.authService.logOut().subscribe(
