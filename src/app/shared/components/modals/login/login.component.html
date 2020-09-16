@@ -1,88 +1,72 @@
-<div
-  class="modal fade"
-  id="loginModal"
-  tabindex="-1"
-  aria-labelledby="loginModalLabel"
-  aria-hidden="true"
-  style="padding-right: 16px; display: block"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-2">
-      <div class="modal-header border-0">
-        <h5 class="modal-title text-secondary" id="loginModalLabel">LOGIN</h5>
-        <button type="button" class="close" (click)="onClose()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<app-modal [title]="title" [isLoading]="isLoading">
+  <ng-container body>
+    <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
+      <div class="form-group">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input
+          appAutoFocus
+          autocomplete="on"
+          formControlName="email"
+          type="text"
+          id="inputEmail"
+          class="form-control"
+          placeholder="Email"
+        />
+        <small
+          *ngIf="
+            loginForm.controls.email.invalid &&
+            (loginForm.controls.email.dirty || loginForm.controls.email.touched)
+          "
+          class="text-danger"
+          >*Required</small
+        >
       </div>
-      <div class="modal-body">
-        <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
-          <div class="form-group">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input
-              appAutoFocus
-              autocomplete="off"
-              formControlName="email"
-              type="text"
-              id="inputEmail"
-              class="form-control"
-              placeholder="Email"
-            />
-            <small
-              *ngIf="
-                loginForm.controls.email.invalid &&
-                (loginForm.controls.email.dirty ||
-                  loginForm.controls.email.touched)
-              "
-              class="text-danger"
-              >*Required</small
-            >
-          </div>
-          <div class="form-group">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input
-              formControlName="password"
-              type="password"
-              id="inputPassword"
-              class="form-control"
-              placeholder="Password"
-              autocomplete="true"
-              
-            />
-            <small
-              *ngIf="
-                loginForm.controls.password.invalid &&
-                (loginForm.controls.password.dirty ||
-                  loginForm.controls.password.touched)
-              "
-              class="text-danger"
-              >*Required</small
-            >
-          </div>
-          <div class="form-group">
-            <label class="text-muted" for="rememberMe">
-              <input
-                formControlName="rememberMe"
-                id="rememberMe"
-                type="checkbox"
-              />
-              Remember me</label
-            >
-          </div>
-          <button
-            class="btn btn-lg btn-primary btn-block"
-            type="submit"
-            [disabled]="!loginForm.valid"
-          >
-            {{ loggingIn ? "Logging in..." : "Log in" }}
-          </button>
-        </form>
+      <div class="form-group">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          id="inputPassword"
+          class="form-control"
+          placeholder="Password"
+          autocomplete="true"
+        />
+        <small
+          *ngIf="
+            loginForm.controls.password.invalid &&
+            (loginForm.controls.password.dirty ||
+              loginForm.controls.password.touched)
+          "
+          class="text-danger"
+          >*Required</small
+        >
       </div>
-      <div class="modal-footer border-0">
-        <div class="h-100">
-          <span *ngIf="res.error" class="text-danger">{{ res.message }}</span>
-          <span *ngIf="!res.error" class="text-success">{{ res.message }}</span>
-        </div>
+      <div class="form-group">
+        <label class="text-muted" for="rememberMe">
+          <input formControlName="rememberMe" id="rememberMe" type="checkbox" />
+          Remember me</label
+        >
       </div>
+      <button
+        class="btn btn-lg btn-primary btn-block"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        <span
+          *ngIf="isLoading"
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Loading...</span>
+        {{ isLoading ? "Logging in..." : "Log in" }}
+      </button>
+    </form>
+  </ng-container>
+  <ng-container footer>
+    <div class="h-100">
+      <span *ngIf="res.error" class="text-danger">{{ res.message }}</span>
+      <span *ngIf="!res.error" class="text-success">{{ res.message }}</span>
     </div>
-  </div>
-</div>
+  </ng-container>
+</app-modal>

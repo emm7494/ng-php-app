@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class ModalComponent implements OnInit, AfterViewInit {
   modalJQueryElement: JQuery<HTMLElement>;
   @Input() title: string;
+  @Input() isLoading: boolean;
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
@@ -20,7 +21,7 @@ export class ModalComponent implements OnInit, AfterViewInit {
     this.modalJQueryElement.on('hidden.bs.modal', () => {
       this.router.navigate(['..']);
     });
-    this.modalJQueryElement.find('.modal-title').text(this.title);
+    // this.modalJQueryElement.find('.modal-title').text(this.title);
     this.modalJQueryElement.modal('show');
   }
   onClose() {

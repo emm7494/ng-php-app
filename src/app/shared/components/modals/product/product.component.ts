@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Data, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import {
   AbstractControl,
@@ -12,7 +12,7 @@ import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
-import { RouterService } from 'src/app/shared/services/router/router.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-product',
@@ -22,12 +22,11 @@ import { RouterService } from 'src/app/shared/services/router/router.service';
 export class ProductComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
-  product: Product = new Product();
+  product: Product;
   productForm: FormGroup;
   private total: number;
-  @ViewChild('closeBtn') closeBtn;
 
-  showModal = false;
+  @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
   constructor(
     private router: Router,
@@ -36,13 +35,9 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private routerService: RouterService
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.showModal = data.showModal;
-    });
     this.productForm = this.formBuilder.group({
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
@@ -88,10 +83,6 @@ export class ProductComponent implements OnInit {
 
   addToCart() {
     if (this.productForm.valid) {
-      this.cartService.addCartItem(
-        this.product.id,
-        this.productForm.value.quantity
-      );
       if (this.authService.currentUser.value) {
         this.cartService
           .postUserCart([
@@ -103,17 +94,27 @@ export class ProductComponent implements OnInit {
           .subscribe(
             (res: CartItem[]) => {
               console.log(res);
+              this.cartService.addCartItem(
+                this.product.id,
+                this.productForm.value.quantity
+              );
+              // this.modalComponent.onClose();
             },
             (error) => {
               console.error(error);
+              this.modalComponent.onClose();
+            },
+            () => {
+              this.modalComponent.onClose();
             }
           );
+      } else {
+        this.cartService.addCartItem(
+          this.product.id,
+          this.productForm.value.quantity
+        );
+        this.modalComponent.onClose();
       }
-      this.closeBtn.nativeElement.click();
     }
-  }
-
-  onClose() {
-    this.routerService.unSetAuxiliaryRoute();
   }
 }

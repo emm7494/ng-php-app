@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AuthService } from './shared/services/auth/auth.service';
-import { NavigationStart, Router } from '@angular/router';
-import { RouterService } from './shared/services/router/router.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +8,7 @@ import { RouterService } from './shared/services/router/router.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private routerService: RouterService
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.authService.mountCurrentUser();
