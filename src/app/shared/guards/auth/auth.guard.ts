@@ -31,14 +31,10 @@ export class AuthGuard
     if (!!this.authService.currentUser.value) {
       return true;
     }
-    console.log('this.router.url', this.router.url);
-    console.log('this.url', route.url[0].path);
+    console.log('next url after login: ', route.url[0].path);
     this.router.navigate([{ outlets: { primary: null, modal: ['login'] } }], {
       queryParams: { next: route.url[0].path },
     });
-    // this.router.navigate([{ outlets: { primary: null } }], {
-    //   queryParams: { next: route.url[0].path },
-    // });
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,

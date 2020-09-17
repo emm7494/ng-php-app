@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import {
   AbstractControl,
@@ -12,7 +12,7 @@ import { Product } from 'src/app/shared/models/product/product.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from 'src/app/shared/components/modal/modal/modal.component';
 
 @Component({
   selector: 'app-product',
@@ -25,16 +25,16 @@ export class ProductComponent implements OnInit {
   product: Product;
   productForm: FormGroup;
   private total: number;
+  isLoading: boolean;
 
-  @ViewChild(ModalComponent) modalComponent: ModalComponent;
+  @ViewChild('modalComponent') modalComponent: ModalComponent;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private cartService: CartService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -44,14 +44,12 @@ export class ProductComponent implements OnInit {
     this.productForm.controls.quantity.valueChanges.subscribe((value) => {
       this.totalAmount = value;
     });
-    this.route.paramMap.subscribe((params: Params) => {
-      this.productService
-        .getProduct(params.get('product-id'))
-        .subscribe((product: Product) => {
-          this.product = product;
-          this.totalAmount = 1;
-        });
-    });
+    this.productService
+      .getProduct(this.route.snapshot.paramMap.get('product-id'))
+      .subscribe((product: Product) => {
+        this.product = product;
+        this.totalAmount = 1;
+      });
   }
 
   get totalAmount(): number {
@@ -83,37 +81,42 @@ export class ProductComponent implements OnInit {
 
   addToCart() {
     if (this.productForm.valid) {
+      this.isLoading = true;
       if (this.authService.currentUser.value) {
-        this.cartService
-          .postUserCart([
-            {
-              product_id: this.product.id,
-              quantity: this.productForm.value.quantity,
-            },
-          ])
-          .subscribe(
-            (res: CartItem[]) => {
-              console.log(res);
-              this.cartService.addCartItem(
-                this.product.id,
-                this.productForm.value.quantity
-              );
-              // this.modalComponent.onClose();
-            },
-            (error) => {
-              console.error(error);
-              this.modalComponent.onClose();
-            },
-            () => {
-              this.modalComponent.onClose();
-            }
-          );
+        setTimeout(() => {
+          this.cartService
+            .postUserCart([
+              {
+                product_id: this.product.id,
+                quantity: this.productForm.value.quantity,
+              },
+            ])
+            .subscribe(
+              (res: CartItem[]) => {
+                console.log(res);
+                this.cartService.addCartItem(
+                  this.product.id,
+                  this.productForm.value.quantity
+                );
+                // this.modalComponent.onClose();
+              },
+              (error) => {
+                console.error(error);
+                this.modalComponent.onClose();
+              },
+              () => {
+                this.modalComponent.onClose();
+              }
+            );
+        }, 500);
       } else {
-        this.cartService.addCartItem(
-          this.product.id,
-          this.productForm.value.quantity
-        );
-        this.modalComponent.onClose();
+        setTimeout(() => {
+          this.cartService.addCartItem(
+            this.product.id,
+            this.productForm.value.quantity
+          );
+          this.modalComponent.onClose();
+        }, 250);
       }
     }
   }

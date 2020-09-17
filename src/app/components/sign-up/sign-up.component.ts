@@ -5,8 +5,8 @@ import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
   error: object;

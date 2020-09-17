@@ -9,5 +9,16 @@
     {
       "path": "."
     }
-  ]
+  ],
+  "settings": {
+    "cSpell.words": [
+      "angular",
+      "angular fontawesome",
+      "downlevel",
+      "downlevel iteration",
+      "fontawesome",
+      "fortawesome",
+      "iteration"
+    ]
+  }
 }

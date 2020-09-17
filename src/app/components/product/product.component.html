@@ -1,4 +1,9 @@
-<app-modal *ngIf="product" [title]="product.name">
+<app-modal
+  #modalComponent
+  *ngIf="product"
+  [title]="product.name"
+  [isLoading]="isLoading"
+>
   <ng-container body>
     <div class="media">
       <img

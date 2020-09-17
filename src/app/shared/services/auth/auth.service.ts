@@ -47,7 +47,7 @@ export class AuthService {
       );
   }
 
-  logOut() {
+  logOut(autoLogout = true) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
       .pipe(
@@ -55,7 +55,12 @@ export class AuthService {
           this.unMountCurrentUser();
           this.storageService.emptyLocalStorage();
           clearTimeout(this.autoLogoutTimerID);
-          this.router.navigate(['/']);
+          if (autoLogout) {
+            this.router.navigate(
+              [{ outlets: { primary: null, modal: ['logout'] } }],
+              { queryParams: { autoLogout: true } }
+            );
+          }
         })
       );
   }

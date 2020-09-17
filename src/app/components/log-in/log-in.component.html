@@ -1,4 +1,4 @@
-<app-modal [title]="title" [isLoading]="isLoading">
+<app-modal #modalComponent [title]="title" [isLoading]="isLoading">
   <ng-container body>
     <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
       <div class="form-group">
@@ -65,8 +65,12 @@
   </ng-container>
   <ng-container footer>
     <div class="h-100">
-      <span *ngIf="res.error" class="text-danger">{{ res.message }}</span>
-      <span *ngIf="!res.error" class="text-success">{{ res.message }}</span>
+      <span *ngIf="res && res.error && !isLoading" class="text-danger">{{
+        res.message
+      }}</span>
+      <span *ngIf="res && !res.error" class="text-success">{{
+        res.message
+      }}</span>
     </div>
   </ng-container>
 </app-modal>

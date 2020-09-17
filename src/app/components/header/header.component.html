@@ -20,7 +20,7 @@
       <ul class="navbar-nav ml-sm-auto">
         <ng-container *ngIf="!isAuthenticated">
           <li class="nav-item mx-auto">
-            <a routerLink="signup" routerLinkActive="active" class="nav-link">
+            <a routerLink="sign-up" routerLinkActive="active" class="nav-link">
               Sign Up
               <fa-icon [icon]="faUserPlus" size="lg"></fa-icon>
             </a>
@@ -56,7 +56,8 @@
               style="cursor: pointer"
               routerLinkActive="active"
               class="nav-link"
-              (click)="logOut($event)"
+              [routerLink]="[{ outlets: { modal: ['logout'] } }]"
+              [queryParams]="{ autoLogout: false }"
             >
               Log Out
               <fa-icon [icon]="faSignOutAlt" size="lg"></fa-icon>

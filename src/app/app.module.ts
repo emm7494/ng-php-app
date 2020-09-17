@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { ComponentsModule } from './components/components.module';
-import { ModalsModule } from './shared/components/modals/modals.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +19,6 @@ import { ModalsModule } from './shared/components/modals/modals.module';
     HttpClientModule,
     ReactiveFormsModule,
     ComponentsModule,
-    ModalsModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
