@@ -19,6 +19,7 @@ const routes: Routes = [
     path: 'logout',
     component: LogOutComponent,
     outlet: 'modal',
+    canActivate: [AuthGuard],
   },
   {
     path: 'product/:product-id',

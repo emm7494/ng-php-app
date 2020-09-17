@@ -16,7 +16,7 @@ export class LogInComponent implements OnInit {
   loginForm: FormGroup;
   isLoading: boolean;
   title: string;
-  nextRoute: null | string;
+  next: null | string;
   modalJQueryElement: JQuery<HTMLElement>;
   @ViewChild('modalComponent') modalComponent: ModalComponent;
 
@@ -34,7 +34,8 @@ export class LogInComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: true,
     });
-    this.nextRoute = this.route.snapshot.queryParams.next ?? null;
+
+    this.next = this.route.snapshot.queryParams.next ?? null;
   }
   logIn(credentials: { email: string; password: string }) {
     this.isLoading = true;
@@ -56,11 +57,14 @@ export class LogInComponent implements OnInit {
         },
         () => {
           setTimeout(() => {
-            if (this.nextRoute) {
-              this.router.navigate([this.nextRoute]);
+            const outlet = this.route.snapshot.queryParamMap.get('outlet');
+            const path = this.route.snapshot.queryParamMap.get('path');
+            const next = this.route.snapshot.queryParamMap.get('next');
+            if (JSON.parse(next)) {
+              this.router.navigate([{ outlets: { [outlet]: path } }]);
             }
             this.modalComponent.onClose();
-          }, 500);
+          }, 1000);
         }
       );
     }, 1000);

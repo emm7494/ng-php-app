@@ -57,7 +57,7 @@
               routerLinkActive="active"
               class="nav-link"
               [routerLink]="[{ outlets: { modal: ['logout'] } }]"
-              [queryParams]="{ autoLogout: false }"
+              [queryParams]="{ isAutoLogout: false }"
             >
               Log Out
               <fa-icon [icon]="faSignOutAlt" size="lg"></fa-icon>

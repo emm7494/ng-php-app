@@ -47,19 +47,20 @@ export class AuthService {
       );
   }
 
-  logOut(autoLogout = true) {
+  logOut(isAutoLogout = true) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
       .pipe(
         tap(() => {
-          this.unMountCurrentUser();
-          this.storageService.emptyLocalStorage();
-          clearTimeout(this.autoLogoutTimerID);
-          if (autoLogout) {
+          if (isAutoLogout) {
             this.router.navigate(
               [{ outlets: { primary: null, modal: ['logout'] } }],
-              { queryParams: { autoLogout: true } }
+              { queryParams: { isAutoLogout } }
             );
+          } else {
+            this.unMountCurrentUser();
+            this.storageService.emptyLocalStorage();
+            clearTimeout(this.autoLogoutTimerID);
           }
         })
       );
@@ -94,6 +95,7 @@ export class AuthService {
   }
 
   setAutoLogoutTimer(TTL: number) {
+    console.log(TTL - 90);
     if (this.currentUser.value) {
       clearTimeout(this.autoLogoutTimerID);
       this.autoLogoutTimerID = setTimeout(() => {
@@ -105,7 +107,7 @@ export class AuthService {
             console.error(errorRes);
           }
         );
-      }, TTL);
+      }, TTL - 10000);
     }
   }
   private handleError(errorRes: HttpErrorResponse) {

@@ -32,8 +32,10 @@ export class AuthGuard
       return true;
     }
     console.log('next url after login: ', route.url[0].path);
-    this.router.navigate([{ outlets: { primary: null, modal: ['login'] } }], {
-      queryParams: { next: route.url[0].path },
+    console.log(route.routeConfig);
+    const { outlet = 'primary', path } = route.routeConfig;
+    this.router.navigate([{ outlets: { modal: ['login'] } }], {
+      queryParams: { outlet, path, next: true },
     });
   }
   canActivateChild(

@@ -16,9 +16,11 @@
       "angular fontawesome",
       "downlevel",
       "downlevel iteration",
+      "firstname",
       "fontawesome",
       "fortawesome",
-      "iteration"
+      "iteration",
+      "lastname"
     ]
   }
 }

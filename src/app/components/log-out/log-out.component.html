@@ -1,7 +1,12 @@
 <app-modal #modalComponent [title]="title" [isLoading]="isLoading">
-  <ng-container body>
+  <ng-container *ngIf="message" body>
     <div class="d-flex justify-content-center align-items-center flex-column">
-      <div class="d-inline-block h2 pb-4 text-muted">Please try again!</div>
+      <div
+        class="d-inline-block h2 pb-4"
+        [ngClass]="{ 'text-danger': res.error, 'text-success': !res.error }"
+      >
+        {{ message }}
+      </div>
     </div>
   </ng-container>
   <ng-container footer>

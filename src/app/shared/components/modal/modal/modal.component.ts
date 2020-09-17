@@ -19,7 +19,7 @@ export class ModalComponent implements OnInit, AfterViewInit {
       // $('#inputEmail').trigger('focus');
     });
     this.modalJQueryElement.on('hidden.bs.modal', () => {
-      this.router.navigate(['..']);
+      this.router.navigate([{ outlets: { modal: null } }]);
     });
     // this.modalJQueryElement.find('.modal-title').text(this.title);
     this.modalJQueryElement.modal('show');
