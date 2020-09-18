@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
+import { CartService } from '../../shared/services/cart/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -23,12 +24,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faUserPlus = faUserPlus;
   faSignOutAlt = faSignOutAlt;
   isAuthenticated = false;
+  cartTotal: number;
   private currentUserSubscription: Subscription;
   @ViewChild('loginAnchor') loginAnchor;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
+    this.cartService.cartTotal.subscribe((total: number) => {
+      this.cartTotal = total;
+    });
     this.currentUserSubscription = this.authService.currentUser.subscribe(
       (user: CurrentUser) => {
         this.isAuthenticated = !!user;

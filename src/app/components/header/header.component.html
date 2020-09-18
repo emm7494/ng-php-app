@@ -22,7 +22,7 @@
           <li class="nav-item mx-auto">
             <a routerLink="sign-up" routerLinkActive="active" class="nav-link">
               Sign Up
-              <fa-icon [icon]="faUserPlus" size="lg"></fa-icon>
+              <fa-icon [icon]="faUserPlus" size=""></fa-icon>
             </a>
           </li>
           <span
@@ -42,7 +42,7 @@
               [routerLink]="[{ outlets: { modal: ['login'] } }]"
             >
               Log In
-              <fa-icon [icon]="faSignInAlt" size="lg"></fa-icon>
+              <fa-icon [icon]="faSignInAlt" size=""></fa-icon>
             </a>
           </li>
           <span
@@ -69,8 +69,18 @@
           ></span>
         </ng-container>
         <li class="nav-item mr-sm-2 mx-auto">
-          <a routerLink="cart" routerLinkActive="active" class="nav-link">
-            <fa-icon [icon]="faShoppingCart" size="1x"></fa-icon>
+          <a
+            routerLink="cart"
+            routerLinkActive="active"
+            class="nav-link badge-container"
+          >
+            <fa-icon [icon]="faShoppingCart" size="" transform="grow-3 left-5">
+            </fa-icon>
+            <span
+              class="badge badge-pillz badge-danger rounded-circle border border-light"
+            >
+              {{ cartTotal }}</span
+            >
           </a>
         </li>
         <ng-container *ngIf="isAuthenticated">
@@ -80,7 +90,8 @@
               routerLinkActive="active"
               class="nav-link"
             >
-              <fa-icon [icon]="faUserCircle" size="lg"></fa-icon>
+              <fa-icon [icon]="faUserCircle" size="lg" transform="grow-1 up-1">
+              </fa-icon>
             </a>
           </li>
         </ng-container>

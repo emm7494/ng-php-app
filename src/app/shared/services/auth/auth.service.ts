@@ -21,7 +21,14 @@ export class AuthService {
     private router: Router,
     private cartService: CartService,
     private storageService: StorageService
-  ) {}
+  ) {
+    this.mountCurrentUser();
+    if (this.currentUser.value) {
+      this.setAutoLogoutTimer(
+        +this.currentUser.value.jwtEXP * 1000 - new Date().getTime()
+      );
+    }
+  }
   signUp(firstname: string, lastname: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
