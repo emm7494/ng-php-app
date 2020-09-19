@@ -10,7 +10,7 @@ import { StorageService } from '../../shared/services/storage/storage.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  products: CartItem[] = [];
+  cartItems: CartItem[] = [];
   constructor(
     private cartService: CartService,
     private authService: AuthService,
@@ -21,8 +21,8 @@ export class CartComponent implements OnInit {
     if (this.storageService.mountedCurrentUser.value) {
       // console.log(this.storageService.mountedCurrentUser.value);
       this.cartService.getUserCart().subscribe(
-        (products: CartItem[]) => {
-          this.products = products;
+        (cartItems: CartItem[]) => {
+          this.cartItems = cartItems;
         },
         (error) => {
           console.error(error);
@@ -31,11 +31,13 @@ export class CartComponent implements OnInit {
     }
   }
 
-  get cartItems(): CartItem[] {
-    return this.cartService.getCartItems();
-  }
+  // get cartItems(): CartItem[] {
+  // return this.cartService.getCartItems();
+  // return this.storageService.cartItems;
+  // }
 
-  set cartItems(items: CartItem[]) {
-    this.cartService.setCartItems(items);
-  }
+  // set cartItems(items: CartItem[]) {
+  // this.cartService.setCartItems(items);
+  // this.storageService.cartItems = items;
+  // }
 }

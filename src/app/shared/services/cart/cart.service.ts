@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, BehaviorSubject } from 'rxjs';
+import { throwError } from 'rxjs';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { StorageService } from '../storage/storage.service';
 
@@ -36,7 +36,7 @@ export class CartService {
   }
 
   addCartItem(productId: string, quantity: number) {
-    const oldCartItems: CartItem[] = this.getCartItems();
+    const oldCartItems: CartItem[] = this.storageService.cartItems;
 
     let notFound = true;
     const newCartItems = oldCartItems.map((item) => {
@@ -53,7 +53,8 @@ export class CartService {
     if (notFound) {
       newCartItems.push({ product_id: productId, quantity });
     }
-    this.setCartItems(newCartItems);
+    // this.setCartItems(newCartItems);
+    this.storageService.cartItems = newCartItems;
   }
 
   addCartItems(items: CartItem[], mergeItems = false) {
@@ -62,18 +63,19 @@ export class CartService {
         this.addCartItem(product_id, +quantity)
       );
     } else {
-      this.setCartItems(items);
+      // this.setCartItems(items);
+      this.storageService.cartItems = items;
     }
   }
 
-  getCartItems(): CartItem[] {
-    return this.storageService.cartItems;
-  }
+  // getCartItems(): CartItem[] {
+    // return this.storageService.cartItems;
+  // }
 
-  setCartItems(items: CartItem[]) {
-    this.storageService.cartItems = items;
+  // setCartItems(items: CartItem[]) {
+    // this.storageService.cartItems = items;
     // this.mountCartTotal();
-  }
+  // }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);
   }
