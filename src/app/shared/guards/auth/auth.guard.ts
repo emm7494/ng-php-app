@@ -13,13 +13,18 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard
   implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -28,7 +33,7 @@ export class AuthGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!!this.authService.currentUser.value) {
+    if (!!this.storageService.mountedCurrentUser.value) {
       return true;
     }
     console.log('next url after login: ', route.url[0].path);

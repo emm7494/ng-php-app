@@ -1,6 +1,7 @@
 <div
   class="modal fade"
   id="loginModal"
+  [attr.data-backdrop]="isLoading ? 'static' : true"
   tabindex="-1"
   aria-labelledby="loginModalLabel"
   aria-hidden="true"

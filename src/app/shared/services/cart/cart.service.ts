@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { StorageService } from '../storage/storage.service';
@@ -9,17 +9,22 @@ import { StorageService } from '../storage/storage.service';
   providedIn: 'root',
 })
 export class CartService {
-  cartTotal = new BehaviorSubject<number>(0);
+  // cartTotal = new BehaviorSubject<number>(0);
   constructor(
     private http: HttpClient,
     private storageService: StorageService
   ) {
-    this.mountCartTotal();
+    // this.mountCartTotal();
   }
   getUserCart() {
     return this.http
       .get<CartItem[]>('http://localhost:4000/api/get_user_cart')
-      .pipe(catchError((errorRes) => this.handleError(errorRes)));
+      .pipe(
+        catchError((errorRes) => this.handleError(errorRes)),
+        tap((items: CartItem[]) => {
+          this.handleCartGet(items);
+        })
+      );
   }
 
   postUserCart(items: CartItem[]) {
@@ -67,12 +72,16 @@ export class CartService {
 
   setCartItems(items: CartItem[]) {
     this.storageService.cartItems = items;
-    this.mountCartTotal();
+    // this.mountCartTotal();
   }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);
   }
-  mountCartTotal() {
-    this.cartTotal.next(this.getCartItems().length);
+  // mountCartTotal() {
+  //   this.cartTotal.next(this.getCartItems().length);
+  // }
+  handleCartGet(items: CartItem[]) {
+    this.addCartItems(items, false);
+    this.storageService.mountCartTotal();
   }
 }

@@ -11,6 +11,7 @@ import {
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { CartService } from '../../shared/services/cart/cart.service';
+import { StorageService } from '../../shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -30,18 +31,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
-    this.cartService.cartTotal.subscribe((total: number) => {
+    this.storageService.cartTotal.subscribe((total: number) => {
       this.cartTotal = total;
     });
-    this.currentUserSubscription = this.authService.currentUser.subscribe(
-      (user: CurrentUser) => {
-        this.isAuthenticated = !!user;
-      }
-    );
+    // this.currentUserSubscription = this.authService.currentUser.subscribe(
+    //   (user: CurrentUser) => {
+    //     this.isAuthenticated = !!user;
+    //   }
+    // );
+    this.storageService.mountedCurrentUser.subscribe((user: CurrentUser) => {
+      this.isAuthenticated = !!user;
+    });
   }
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();

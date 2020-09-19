@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { StorageService } from '../../shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,11 +13,13 @@ export class CartComponent implements OnInit {
   products: CartItem[] = [];
   constructor(
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.currentUser.value) {
+    if (this.storageService.mountedCurrentUser.value) {
+      // console.log(this.storageService.mountedCurrentUser.value);
       this.cartService.getUserCart().subscribe(
         (products: CartItem[]) => {
           this.products = products;

@@ -13,6 +13,7 @@ import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal/modal.component';
+import { StorageService } from '../../shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-product',
@@ -34,7 +35,8 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
@@ -82,7 +84,7 @@ export class ProductComponent implements OnInit {
   addToCart() {
     if (this.productForm.valid) {
       this.isLoading = true;
-      if (this.authService.currentUser.value) {
+      if (this.storageService.mountedCurrentUser.value) {
         setTimeout(() => {
           this.cartService
             .postUserCart([

@@ -22,10 +22,11 @@ export class AuthService {
     private cartService: CartService,
     private storageService: StorageService
   ) {
-    this.mountCurrentUser();
-    if (this.currentUser.value) {
+    // this.mountCurrentUser();
+    if (this.storageService.mountedCurrentUser.value) {
       this.setAutoLogoutTimer(
-        +this.currentUser.value.jwtEXP * 1000 - new Date().getTime()
+        +this.storageService.mountedCurrentUser.value.jwtEXP * 1000 -
+          new Date().getTime()
       );
     }
   }
@@ -65,7 +66,8 @@ export class AuthService {
               { queryParams: { isAutoLogout } }
             );
           } else {
-            this.unMountCurrentUser();
+            // this.unMountCurrentUser();
+            this.storageService.currentUser = null;
             this.storageService.emptyLocalStorage();
             clearTimeout(this.autoLogoutTimerID);
           }
@@ -85,25 +87,27 @@ export class AuthService {
       resData.data.payload.exp
     );
     this.storageService.currentUser = currentUser;
-    this.mountCurrentUser();
+    // this.mountCurrentUser();
     this.cartService.getUserCart().subscribe((items: CartItem[]) => {
-      this.cartService.addCartItems(items, false);
+      // this.cartService.addCartItems(items, false);
+      // this.storageService.mountCartTotal();
     });
     this.setAutoLogoutTimer(
-      +this.currentUser.value.jwtEXP * 1000 - new Date().getTime()
+      +this.storageService.mountedCurrentUser.value.jwtEXP * 1000 -
+        new Date().getTime()
     );
   }
 
-  mountCurrentUser() {
-    this.currentUser.next(this.storageService.currentUser);
-  }
-  unMountCurrentUser() {
-    this.currentUser.next(null);
-  }
+  // mountCurrentUser() {
+  //   this.currentUser.next(this.storageService.currentUser);
+  // }
+  // unMountCurrentUser() {
+  //   this.currentUser.next(null);
+  // }
 
   setAutoLogoutTimer(TTL: number) {
     console.log(TTL - 90);
-    if (this.currentUser.value) {
+    if (this.storageService.mountedCurrentUser.value) {
       clearTimeout(this.autoLogoutTimerID);
       this.autoLogoutTimerID = setTimeout(() => {
         this.logOut().subscribe(
