@@ -56,8 +56,9 @@ export class CartService {
       items.forEach(({ product_id, quantity }) =>
         this.addCartItem(product_id, +quantity)
       );
+    } else {
+      this.setCartItems(items);
     }
-    this.setCartItems(items);
   }
 
   getCartItems(): CartItem[] {
