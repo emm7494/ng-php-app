@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.storageService.cartTotal.subscribe((total: number) => {
+    this.storageService.mountedCartTotal.subscribe((total: number) => {
       this.cartTotal = total;
     });
     // this.currentUserSubscription = this.authService.currentUser.subscribe(

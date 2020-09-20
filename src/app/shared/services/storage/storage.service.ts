@@ -10,11 +10,13 @@ export class StorageService {
   currentUserKey = 'currentUser';
   cartItemsKey = 'cart';
   mountedCurrentUser = new BehaviorSubject<CurrentUser>(null);
-  cartTotal = new BehaviorSubject<number>(0);
+  mountedCartTotal = new BehaviorSubject<number>(0);
+  mountedCartItems = new BehaviorSubject<CartItem[]>(null);
 
   constructor() {
     this.mountedCurrentUser.next(this.currentUser);
     this.mountCartTotal();
+    this.mountCart();
   }
 
   get currentUser(): CurrentUser {
@@ -27,7 +29,7 @@ export class StorageService {
   set currentUser(user: CurrentUser) {
     localStorage.setItem(this.currentUserKey, JSON.stringify(user));
     if (!user) {
-      this.cartTotal.next(0);
+      this.mountedCartTotal.next(0);
     }
     this.mountedCurrentUser.next(user);
     console.log('user: ', user);
@@ -42,10 +44,14 @@ export class StorageService {
 
   set cartItems(items: CartItem[]) {
     localStorage.setItem('cart', JSON.stringify(items));
+    this.mountCart();
     this.mountCartTotal();
   }
   mountCartTotal() {
     console.log(this.cartItems.length);
-    this.cartTotal.next(this.cartItems.length);
+    this.mountedCartTotal.next(this.cartItems.length);
+  }
+  mountCart() {
+    this.mountedCartItems.next(this.cartItems);
   }
 }

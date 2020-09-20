@@ -18,17 +18,20 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.storageService.mountedCurrentUser.value) {
-      // console.log(this.storageService.mountedCurrentUser.value);
-      this.cartService.getUserCart().subscribe(
-        (cartItems: CartItem[]) => {
-          this.cartItems = cartItems;
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
+    this.storageService.mountedCartItems.subscribe((items: CartItem[]) => {
+      this.cartItems = items;
+    });
+    // if (this.storageService.mountedCurrentUser.value) {
+    //   // console.log(this.storageService.mountedCurrentUser.value);
+    //   this.cartService.getUserCart().subscribe(
+    //     (cartItems: CartItem[]) => {
+    //       this.cartItems = cartItems;
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
+    // }
   }
 
   // get cartItems(): CartItem[] {

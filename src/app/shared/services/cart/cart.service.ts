@@ -44,7 +44,7 @@ export class CartService {
         notFound = false;
         return {
           product_id: item.product_id,
-          quantity: item.quantity + quantity,
+          quantity: +item.quantity + +quantity,
         };
       } else {
         return { product_id: item.product_id, quantity: item.quantity };
@@ -60,7 +60,7 @@ export class CartService {
   addCartItems(items: CartItem[], mergeItems = false) {
     if (mergeItems) {
       items.forEach(({ product_id, quantity }) =>
-        this.addCartItem(product_id, +quantity)
+        this.addCartItem(product_id, quantity)
       );
     } else {
       // this.setCartItems(items);
@@ -69,12 +69,12 @@ export class CartService {
   }
 
   // getCartItems(): CartItem[] {
-    // return this.storageService.cartItems;
+  // return this.storageService.cartItems;
   // }
 
   // setCartItems(items: CartItem[]) {
-    // this.storageService.cartItems = items;
-    // this.mountCartTotal();
+  // this.storageService.cartItems = items;
+  // this.mountCartTotal();
   // }
   private handleError(errorRes: HttpErrorResponse) {
     return throwError(errorRes);
