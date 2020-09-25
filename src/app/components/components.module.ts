@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogOutComponent } from './log-out/log-out.component';
+import { CartItemsComponent } from './cart/cart-items/cart-items.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LogOutComponent } from './log-out/log-out.component';
     LogInComponent,
     ProductComponent,
     LogOutComponent,
+    CartItemsComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { LogOutComponent } from './log-out/log-out.component';
     SignUpComponent,
     LogInComponent,
     ProductComponent,
+    CartItemsComponent,
   ],
 })
 export class ComponentsModule {}

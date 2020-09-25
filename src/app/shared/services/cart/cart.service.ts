@@ -1,9 +1,11 @@
+import { CartItem } from './../../models/cart/cart-item.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { CartItem } from 'src/app/shared/models/cart/cart-item.model';
 import { StorageService } from '../storage/storage.service';
+import { environment } from 'src/environments/environment';
+import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +14,14 @@ export class CartService {
   // cartTotal = new BehaviorSubject<number>(0);
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private formBuilder: FormBuilder
   ) {
     // this.mountCartTotal();
   }
   getUserCart() {
     return this.http
-      .get<CartItem[]>('http://localhost:4000/api/get_user_cart')
+      .get<CartItem[]>(`${environment.apiURL}/get_user_cart`)
       .pipe(
         catchError((errorRes) => this.handleError(errorRes)),
         tap((items: CartItem[]) => {
@@ -29,7 +32,7 @@ export class CartService {
 
   postUserCart(items: CartItem[]) {
     return this.http
-      .post<CartItem[]>('http://localhost:4000/api/post_user_cart', {
+      .post<CartItem[]>(`${environment.apiURL}/post_user_cart`, {
         cart: items,
       })
       .pipe(catchError((resError) => this.handleError(resError)));
@@ -82,8 +85,23 @@ export class CartService {
   // mountCartTotal() {
   //   this.cartTotal.next(this.getCartItems().length);
   // }
-  handleCartGet(items: CartItem[]) {
+  private handleCartGet(items: CartItem[]) {
     this.addCartItems(items, false);
     this.storageService.mountCartTotal();
+  }
+  private createItem(item: CartItem): FormControl {
+    return this.formBuilder.control(item.quantity);
+  }
+
+  toFormGroup(items: CartItem[]): FormGroup {
+    console.log(items);
+    const array: any[] = [];
+    items.forEach((item) => {
+      array.push(this.createItem(item));
+    });
+    console.log(array);
+    return this.formBuilder.group({
+      quantities: this.formBuilder.array(array),
+    });
   }
 }

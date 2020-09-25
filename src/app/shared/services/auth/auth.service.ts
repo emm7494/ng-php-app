@@ -8,6 +8,7 @@ import { CurrentUser } from 'src/app/shared/models/user/user.model';
 import { AuthResponseData } from 'src/app/shared/models/auth-response-data/auth-response-data.model';
 import { StorageService } from '../storage/storage.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class AuthService {
   }
   signUp(firstname: string, lastname: string, email: string, password: string) {
     return this.http
-      .post<AuthResponseData>('http://localhost:4000/api/post_signup_user', {
+      .post<AuthResponseData>(`${environment.apiURL}/post_signup_user`, {
         firstname,
         lastname,
         email,
@@ -42,8 +43,9 @@ export class AuthService {
   }
 
   logIn(email: string, password: string) {
+    console.log(`${environment.apiURL}`);
     return this.http
-      .post<AuthResponseData>('http://localhost:4000/api/post_login_user', {
+      .post<AuthResponseData>(`${environment.apiURL}/post_login_user`, {
         email,
         password,
       })
@@ -57,7 +59,7 @@ export class AuthService {
 
   logOut(isAutoLogout = true) {
     return this.http
-      .post<AuthResponseData>('http://localhost:4000/api/post_logout_user', {})
+      .post<AuthResponseData>(`${environment.apiURL}/post_logout_user`, {})
       .pipe(
         tap(() => {
           if (isAutoLogout) {
@@ -88,10 +90,7 @@ export class AuthService {
     );
     this.storageService.currentUser = currentUser;
     // this.mountCurrentUser();
-    this.cartService.getUserCart().subscribe((items: CartItem[]) => {
-      // this.cartService.addCartItems(items, false);
-      // this.storageService.mountCartTotal();
-    });
+    this.cartService.getUserCart().subscribe();
     this.setAutoLogoutTimer(
       +this.storageService.mountedCurrentUser.value.jwtEXP * 1000 -
         new Date().getTime()
