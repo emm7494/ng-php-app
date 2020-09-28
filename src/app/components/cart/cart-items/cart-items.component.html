@@ -1,5 +1,5 @@
-<table class="table table-hover w-75 mx-auto text-center">
-  <thead>
+<table class="mt-5 table table-hover w-75 mx-auto text-center">
+  <thead class="text-muted">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Quantity</th>
@@ -10,7 +10,7 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody [formGroup]="cartForm">
+  <tbody [formGroup]="cartForm" class="text-muted">
     <ng-container
       *ngFor="let quantity of quantityFormControls; let i = index"
       formArrayName="quantities"
@@ -19,11 +19,11 @@
         <th class="align-middle" scope="row">{{ i + 1 }}</th>
         <td class="align-middle">
           <input
-          disabled="true"
+            #input
             autofocus
             [formControlName]="i"
             type="text"
-            class="form-control text-center mx-auto"
+            class="form-control text-center mx-auto text-muted"
             style="width: 10vw"
           />
         </td>
@@ -35,12 +35,15 @@
         <!-- <td class="align-middle">{{ cartItems[i].modified | date }}</td> -->
         <td class="align-middle">
           <fa-icon
+            (click)="deleteRow(i)"
             [icon]="faTrashAlt"
             transform="grow-10"
             size=""
             style="color: #dc3545"
           ></fa-icon>
           <fa-icon
+            [id]="'input-' + i"
+            (click)="editRow(i)"
             [icon]="faEdit"
             transform="grow-10"
             size=""

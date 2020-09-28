@@ -1,4 +1,8 @@
-
 .ng-fa-icon:hover {
   cursor: pointer;
+}
+
+th,
+td {
+  user-select: none;
 }
