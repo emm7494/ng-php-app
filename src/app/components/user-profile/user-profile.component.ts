@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,16 +7,23 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  signUpForm: FormGroup;
+  profileForm: FormGroup;
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.signUpForm = this.formBuilder.group({
-      name: this.formBuilder.group({
-        firstname: [''],
-        lastname: [''],
-      }),
-      email: [''],
+    $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
     });
+    this.profileForm = this.formBuilder.group({
+      name: this.formBuilder.group({
+        firstname: ['emma'],
+        lastname: ['adu gyamfi'],
+      }),
+      email: ['me@email.com'],
+      proceed: [false, Validators.required],
+    });
+  }
+  saveProfile() {
+    console.log(this.profileForm);
   }
 }

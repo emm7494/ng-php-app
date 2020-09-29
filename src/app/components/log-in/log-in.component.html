@@ -1,6 +1,10 @@
 <app-modal #modalComponent [title]="title" [isLoading]="isLoading">
   <ng-container body>
-    <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
+    <form
+      class="text-muted"
+      [formGroup]="loginForm"
+      (ngSubmit)="logIn(loginForm.value)"
+    >
       <div class="form-group">
         <label for="inputEmail" class="sr-only">Email address</label>
         <input
@@ -44,8 +48,8 @@
       <div class="form-group">
         <label class="text-muted" for="rememberMe">
           <input formControlName="rememberMe" id="rememberMe" type="checkbox" />
-          Remember me</label
-        >
+          <small>Remember me</small>
+        </label>
       </div>
       <button
         class="btn btn-lg btn-primary btn-block"

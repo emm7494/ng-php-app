@@ -3,12 +3,17 @@
   class="avatar rounded-circle img-fluid img-thumbnail"
   alt="avatar"
 /> -->
-<!-- <div class="row py-5"> -->
-<form [formGroup]="signUpForm" class="py-5">
-  <div class="form-row">
+<form
+  [formGroup]="profileForm"
+  class="w-75 mx-auto text-muted py-5"
+  (ngSubmit)="saveProfile()"
+>
+  <div class="form-row" formGroupName="name">
     <div class="form-group col-md-6">
       <label for="firstname">Firstname</label>
       <input
+        autofocus
+        formControlName="firstname"
         autocomplete="on"
         type="text"
         class="form-control"
@@ -17,41 +22,69 @@
     </div>
     <div class="form-group col-md-6">
       <label for="lastname">Lastname</label>
-      <input autocomplete="on" type="text" class="form-control" id="lastname" />
+      <input
+        formControlName="lastname"
+        autocomplete="on"
+        type="text"
+        class="form-control"
+        id="lastname"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="lastname">Email</label>
+      <input
+        formControlName="email"
+        autocomplete="on"
+        type="email"
+        class="form-control"
+        id="email"
+      />
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="lastname">Email</label>
-      <input autocomplete="on" type="email" class="form-control" id="email" />
+      <label for="password1">Password</label>
+      <input
+        autocomplete="new-password"
+        type="password"
+        class="form-control"
+        id="password1"
+      />
+    </div>
+    <div class="form-group col-md-6">
+      <label for="password2">Confirm password</label>
+      <input
+        autocomplete="new-password"
+        type="confirm-password"
+        class="form-control"
+        id="password2"
+      />
     </div>
   </div>
-  <div class="form-group">
-    <label for="password1">Password</label>
-    <input
-      autocomplete="new-password"
-      type="password"
-      class="form-control"
-      id="password1"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password2">Confirm password</label>
-    <input
-      autocomplete="new-password"
-      type="confirm-password"
-      class="form-control"
-      id="password2"
-    />
-  </div>
+
   <div class="form-group">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck" />
-      <label class="form-check-label" for="gridCheck"
-        >Proceed! Sign me up.</label
+      <input
+        required
+        formControlName="proceed"
+        data-toggle="tooltip"
+        data-placement="right"
+        title="I agree, update my profile."
+        class="form-check-input"
+        type="checkbox"
+        id="saveMyProfile"
+      />
+      <label class="form-check-label" for="saveMyProfile"
+        ><small>Proceed!</small></label
       >
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Sign up</button>
+  {{ profileForm.getRawValue() | json }}
+  {{ profileForm.status | json }}
+  <button type="submit" class="d-md-none btn btn-block btn-lg btn-primary">
+    Save
+  </button>
+  <button type="submit" class="d-none d-md-block btn btn-primary">Save</button>
 </form>
-<!-- </div> -->
