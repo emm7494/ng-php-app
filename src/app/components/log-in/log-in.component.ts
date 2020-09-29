@@ -30,9 +30,9 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
     this.title = 'LOGIN';
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rememberMe: true,
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
+      rememberMe: [null],
     });
 
     this.next = this.route.snapshot.queryParams.next ?? null;

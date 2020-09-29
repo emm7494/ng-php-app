@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../shared/services/user/user.service';
+import { CurrentUser } from '../../shared/models/user/user.model';
+import { StorageService } from '../../shared/services/storage/storage.service';
+import { CustomValidators } from '../../validators';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,22 +12,52 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserProfileComponent implements OnInit {
   profileForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  user: CurrentUser;
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
+    this.user = this.storageService.mountedCurrentUser.value;
+    this.profileForm = this.formBuilder.group(
+      {
+        name: this.formBuilder.group({
+          firstname: [],
+          lastname: [],
+        }),
+        password: [],
+        password2: [],
+        email: [{ value: null, disabled: true }, [Validators.email]],
+        proceed: [null, [Validators.requiredTrue]],
+      },
+      {
+        validators: [
+          CustomValidators.requiredIf('password', 'password2'),
+          CustomValidators.requiredIf('password2', 'password'),
+          CustomValidators.mustMatch('password', 'password2'),
+        ],
+      }
+    );
+
+    // this.userService.getUserProfile().subscribe((user: User) => {
+    //   // this.user = user;
+    //   console.log(user.firstname);
+    //   this.profileForm = this.formBuilder.group({
+    //     name: this.formBuilder.group({
+    //       firstname: [user.firstname],
+    //       lastname: [user.lastname],
+    //     }),
+    //     email: [user.email],
+    //     proceed: [false, Validators.required],
+    //   });
+    // });
     $(() => {
       $('[data-toggle="tooltip"]').tooltip();
     });
-    this.profileForm = this.formBuilder.group({
-      name: this.formBuilder.group({
-        firstname: ['emma'],
-        lastname: ['adu gyamfi'],
-      }),
-      email: ['me@email.com'],
-      proceed: [false, Validators.required],
-    });
   }
   saveProfile() {
-    console.log(this.profileForm);
+    console.log(this.profileForm.getRawValue());
   }
 }

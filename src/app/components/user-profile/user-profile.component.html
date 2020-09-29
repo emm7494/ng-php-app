@@ -18,6 +18,7 @@
         type="text"
         class="form-control"
         id="firstname"
+        [placeholder]="user.firstname"
       />
     </div>
     <div class="form-group col-md-6">
@@ -28,9 +29,11 @@
         type="text"
         class="form-control"
         id="lastname"
+        [placeholder]="user.lastname"
       />
     </div>
   </div>
+
   <div class="form-row">
     <div class="form-group col">
       <label for="lastname">Email</label>
@@ -40,13 +43,16 @@
         type="email"
         class="form-control"
         id="email"
+        [placeholder]="user.email"
       />
     </div>
   </div>
+
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="password1">Password</label>
       <input
+        formControlName="password"
         autocomplete="new-password"
         type="password"
         class="form-control"
@@ -56,18 +62,17 @@
     <div class="form-group col-md-6">
       <label for="password2">Confirm password</label>
       <input
+        formControlName="password2"
         autocomplete="new-password"
-        type="confirm-password"
+        type="password"
         class="form-control"
         id="password2"
       />
     </div>
   </div>
-
   <div class="form-group">
     <div class="form-check">
       <input
-        required
         formControlName="proceed"
         data-toggle="tooltip"
         data-placement="right"
@@ -81,10 +86,29 @@
       >
     </div>
   </div>
-  {{ profileForm.getRawValue() | json }}
-  {{ profileForm.status | json }}
-  <button type="submit" class="d-md-none btn btn-block btn-lg btn-primary">
+  <div class="my-3">
+    {{ profileForm.valid | json }}
+  </div>
+  <div class="my-3">
+    {{ profileForm.getRawValue() | json }}
+  </div>
+  <div class="my-3">
+    password: {{ profileForm.controls.password.errors | json }} password2:
+    {{ profileForm.controls.password2.errors | json }}
+    {{ profileForm.controls.proceed.errors | json }}
+  </div>
+  <button
+    [disabled]="!profileForm.valid"
+    type="submit"
+    class="d-md-none btn btn-block btn-lg btn-primary"
+  >
     Save
   </button>
-  <button type="submit" class="d-none d-md-block btn btn-primary">Save</button>
+  <button
+    [disabled]="!profileForm.valid"
+    type="submit"
+    class="d-none d-md-block btn btn-primary"
+  >
+    Save
+  </button>
 </form>
