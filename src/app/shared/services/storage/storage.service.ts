@@ -54,4 +54,7 @@ export class StorageService {
   mountCart() {
     this.mountedCartItems.next(this.cartItems);
   }
+  mountCurrentUser() {
+    this.mountedCurrentUser.next(this.currentUser);
+  }
 }

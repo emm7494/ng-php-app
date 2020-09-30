@@ -20,6 +20,22 @@
         id="firstname"
         [placeholder]="user.firstname"
       />
+      <small
+        *ngIf="
+          n.controls.firstname.invalid &&
+          (n.controls.firstname.dirty || n.controls.firstname.touched)
+        "
+        class="text-danger"
+        >*Required</small
+      >
+      <!-- <small
+          *ngIf="
+            profileForm.controls.email.invalid &&
+            (profileForm.controls.email.dirty || profileForm.controls.email.touched)
+          "
+          class="text-danger"
+          >*Required</small
+        > -->
     </div>
     <div class="form-group col-md-6">
       <label for="lastname">Lastname</label>
@@ -31,6 +47,14 @@
         id="lastname"
         [placeholder]="user.lastname"
       />
+      <small
+        *ngIf="
+          n.controls.lastname.invalid &&
+          (n.controls.lastname.dirty || n.controls.lastname.touched)
+        "
+        class="text-danger"
+        >*Required</small
+      >
     </div>
   </div>
 
@@ -45,6 +69,11 @@
         id="email"
         [placeholder]="user.email"
       />
+      <small
+        *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+        class="text-danger"
+        >*Required</small
+      >
     </div>
   </div>
 
@@ -58,6 +87,11 @@
         class="form-control"
         id="password1"
       />
+      <small
+        *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+        class="text-danger"
+        >*Required</small
+      >
     </div>
     <div class="form-group col-md-6">
       <label for="password2">Confirm password</label>
@@ -68,6 +102,24 @@
         class="form-control"
         id="password2"
       />
+      <small
+        *ngIf="
+          f.password2.invalid &&
+          (f.password2.dirty || f.password2.touched) &&
+          p2E.requiredIf
+        "
+        class="text-danger"
+        >*Required</small
+      >
+      <small
+        *ngIf="
+          f.password2.invalid &&
+          (f.password2.dirty || f.password2.touched) &&
+          p2E.mustMatch
+        "
+        class="text-danger"
+        >*Must match</small
+      >
     </div>
   </div>
   <div class="form-group">
@@ -81,10 +133,15 @@
         type="checkbox"
         id="saveMyProfile"
       />
-      <label class="form-check-label" for="saveMyProfile"
-        ><small>Proceed!</small></label
-      >
+      <label class="form-check-label" for="saveMyProfile">
+        <small style="vertical-align: text-bottom"> Proceed! </small>
+      </label>
     </div>
+      <small
+        *ngIf="f.proceed.invalid && (f.proceed.dirty || f.proceed.touched)"
+        class="text-danger"
+        >*Required</small
+      >
   </div>
   <div class="my-3">
     {{ profileForm.valid | json }}

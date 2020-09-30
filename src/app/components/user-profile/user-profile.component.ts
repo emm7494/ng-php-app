@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { UserService } from '../../shared/services/user/user.service';
 import { CurrentUser } from '../../shared/models/user/user.model';
 import { StorageService } from '../../shared/services/storage/storage.service';
@@ -20,12 +25,14 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.storageService.mountedCurrentUser.value;
+    this.storageService.mountedCurrentUser.subscribe(
+      (user) => (this.user = user)
+    );
     this.profileForm = this.formBuilder.group(
       {
         name: this.formBuilder.group({
-          firstname: [],
-          lastname: [],
+          firstname: [null, [Validators.required]],
+          lastname: [null, [Validators.required]],
         }),
         password: [],
         password2: [],
@@ -57,7 +64,27 @@ export class UserProfileComponent implements OnInit {
       $('[data-toggle="tooltip"]').tooltip();
     });
   }
+
+  get f() {
+    return this.profileForm.controls;
+  }
+
+  get n() {
+    return this.f.name as FormGroup;
+  }
+  get p2E() {
+    return this.f.password2.errors as ValidationErrors;
+  }
+
   saveProfile() {
-    console.log(this.profileForm.getRawValue());
+    console.log(this.profileForm);
+    if (this.profileForm.valid) {
+      this.userService
+        .patchUserProfile(this.profileForm.getRawValue().name)
+        .subscribe((res) => {
+          console.log(res);
+          this.profileForm.reset();
+        });
+    }
   }
 }
