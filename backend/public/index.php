@@ -33,6 +33,8 @@ if ('/api/get_products' === $uri) {
   require_once '../api/delete_user_cart.php';
 } elseif ('/api/patch_user_cart' === $uri) {
   require_once '../api/patch_user_cart.php';
+} elseif ('/api/patch_user_profile' === $uri) {
+  require_once '../api/patch_user_profile.php';
 } else {
   header('HTTP/1.1 404 Not Found');
 }

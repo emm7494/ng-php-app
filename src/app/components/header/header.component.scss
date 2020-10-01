@@ -1,0 +1,18 @@
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+.badge-container {
+  position: relative;
+}
+.badge {
+  position: absolute;
+  top: 8%;
+  right: 0;
+  transform: scale(0.7);
+  // background-color: transparent;
+}
+span,
+a {
+  user-select: none;
+}

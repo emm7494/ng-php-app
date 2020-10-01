@@ -1,27 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { SignUpComponent } from './signup/signup.component';
-import { ProductModalComponent } from './modals/product-modal/product-modal.component';
-import { ProductListingComponent } from './product-listing/product-listing.component';
-import { LoginModalComponent } from './modals/login-modal/login-modal.component';
-
-// export function htmlFiles(url: UrlSegment[]) {
-//   return url.length > 0 && url[url.length - 1].path.endsWith('login')
-//     ? { consumed: url }
-//     : null;
-// }
+import { CartComponent } from './components/cart/cart.component';
+import { LogInComponent } from './components/log-in/log-in.component';
+import { LogOutComponent } from './components/log-out/log-out.component';
+import { ProductListingComponent } from './components/product-listing/product-listing.component';
+import { ProductComponent } from './components/product/product.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { NoAuthGuard } from './shared/guards/no-auth/no-auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginModalComponent,
+    component: LogInComponent,
     outlet: 'modal',
+    canActivate: [NoAuthGuard],
+  },
+  {
+    path: 'logout',
+    component: LogOutComponent,
+    outlet: 'modal',
+    canActivate: [AuthGuard],
   },
   {
     path: 'product/:product-id',
-    component: ProductModalComponent,
+    component: ProductComponent,
     outlet: 'modal',
   },
   // { path: '', redirectTo: 'product-listing', pathMatch: 'full' },
@@ -30,8 +34,16 @@ const routes: Routes = [
     component: ProductListingComponent,
   },
   { path: 'cart', component: CartComponent },
-  { path: 'user-profile', component: UserProfileComponent },
-  { path: 'signup', component: SignUpComponent },
+  {
+    path: 'user-profile',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+    canActivate: [NoAuthGuard],
+  },
 ];
 
 @NgModule({

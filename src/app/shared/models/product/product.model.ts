@@ -1,9 +1,9 @@
 export class Product {
   constructor(
-    public id: string = null,
-    public name: string = null,
-    public price: string = null,
-    public image: string = null,
-    public description: string = null
+    public id: string,
+    public name: string,
+    public price: string,
+    public image: string,
+    public description: string
   ) {}
 }

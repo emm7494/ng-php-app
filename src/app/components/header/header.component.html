@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container-fluid container-md">
+    <a class="navbar-brand" routerLink="/">
+      <img src="/favicon.ico" alt="" />
+    </a>
+    <span class="text-muted"> v1.0.0 </span>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-sm-auto">
+        <ng-container *ngIf="!isAuthenticated">
+          <li class="nav-item mx-auto">
+            <a routerLink="sign-up" routerLinkActive="active" class="nav-link">
+              Sign Up
+              <fa-icon [icon]="faUserPlus" size=""></fa-icon>
+            </a>
+          </li>
+          <span
+            class="d-none d-sm-block mx-sm-4 text-muted"
+            [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
+          ></span>
+        </ng-container>
+        <ng-container *ngIf="!isAuthenticated">
+          <li class="nav-item mx-auto">
+            <a
+              #loginAnchor
+              style="cursor: pointer"
+              routerLinkActive="active"
+              class="nav-link"
+              data-toggle="modal"
+              data-target="#loginModal"
+              [routerLink]="[{ outlets: { modal: ['login'] } }]"
+            >
+              Log In
+              <fa-icon [icon]="faSignInAlt" size=""></fa-icon>
+            </a>
+          </li>
+          <span
+            class="d-none d-sm-block mx-sm-4 text-muted"
+            [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
+          ></span>
+        </ng-container>
+        <ng-container *ngIf="isAuthenticated">
+          <li class="nav-item mx-auto">
+            <a
+              style="cursor: pointer"
+              routerLinkActive="active"
+              class="nav-link"
+              [routerLink]="[{ outlets: { modal: ['logout'] } }]"
+              [queryParams]="{ isAutoLogout: false }"
+            >
+              Log Out
+              <fa-icon [icon]="faSignOutAlt" size="lg"></fa-icon>
+            </a>
+          </li>
+          <span
+            class="d-none d-sm-block mx-sm-4 text-muted"
+            [ngStyle]="{ borderLeft: '1px solid #d8dbdd' }"
+          ></span>
+        </ng-container>
+        <li class="nav-item mr-sm-2 mx-auto">
+          <a
+            routerLink="cart"
+            routerLinkActive="active"
+            class="nav-link badge-container"
+          >
+            <fa-icon [icon]="faShoppingCart" size="" transform="grow-3 left-5">
+            </fa-icon>
+            <span
+              class="badge badge-pillz badge-danger rounded-circle border border-light"
+            >
+              {{ cartTotal }}</span
+            >
+          </a>
+        </li>
+        <ng-container *ngIf="isAuthenticated">
+          <li class="nav-item mx-auto">
+            <a
+              routerLink="user-profile"
+              routerLinkActive="active"
+              class="nav-link"
+            >
+              <fa-icon [icon]="faUserCircle" size="lg" transform="grow-1 up-1">
+              </fa-icon>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</nav>

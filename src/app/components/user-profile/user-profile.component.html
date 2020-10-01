@@ -1,0 +1,171 @@
+<!-- <img
+  src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+  class="avatar rounded-circle img-fluid img-thumbnail"
+  alt="avatar"
+/> -->
+<form
+  [formGroup]="profileForm"
+  class="w-75 mx-auto text-muted py-5"
+  (ngSubmit)="saveProfile()"
+>
+  <div class="form-row" formGroupName="name">
+    <div class="form-group col-md-6">
+      <label for="firstname">Firstname</label>
+      <input
+        autofocus
+        formControlName="firstname"
+        autocomplete="on"
+        type="text"
+        class="form-control"
+        id="firstname"
+        [placeholder]="user.firstname"
+      />
+      <small
+        *ngIf="
+          n.controls.firstname.invalid &&
+          (n.controls.firstname.dirty || n.controls.firstname.touched)
+        "
+        class="text-danger"
+        >*Required</small
+      >
+      <!-- <small
+          *ngIf="
+            profileForm.controls.email.invalid &&
+            (profileForm.controls.email.dirty || profileForm.controls.email.touched)
+          "
+          class="text-danger"
+          >*Required</small
+        > -->
+    </div>
+    <div class="form-group col-md-6">
+      <label for="lastname">Lastname</label>
+      <input
+        formControlName="lastname"
+        autocomplete="on"
+        type="text"
+        class="form-control"
+        id="lastname"
+        [placeholder]="user.lastname"
+      />
+      <small
+        *ngIf="
+          n.controls.lastname.invalid &&
+          (n.controls.lastname.dirty || n.controls.lastname.touched)
+        "
+        class="text-danger"
+        >*Required</small
+      >
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="lastname">Email</label>
+      <input
+        formControlName="email"
+        autocomplete="on"
+        type="email"
+        class="form-control"
+        id="email"
+        [placeholder]="user.email"
+      />
+      <small
+        *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+        class="text-danger"
+        >*Required</small
+      >
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="password1">Password</label>
+      <input
+        formControlName="password"
+        autocomplete="new-password"
+        type="password"
+        class="form-control"
+        id="password1"
+      />
+      <small
+        *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+        class="text-danger"
+        >*Required</small
+      >
+    </div>
+    <div class="form-group col-md-6">
+      <label for="password2">Confirm password</label>
+      <input
+        formControlName="password2"
+        autocomplete="new-password"
+        type="password"
+        class="form-control"
+        id="password2"
+      />
+      <small
+        *ngIf="
+          f.password2.invalid &&
+          (f.password2.dirty || f.password2.touched) &&
+          p2E.requiredIf
+        "
+        class="text-danger"
+        >*Required</small
+      >
+      <small
+        *ngIf="
+          f.password2.invalid &&
+          (f.password2.dirty || f.password2.touched) &&
+          p2E.mustMatch
+        "
+        class="text-danger"
+        >*Must match</small
+      >
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input
+        formControlName="proceed"
+        data-toggle="tooltip"
+        data-placement="right"
+        title="I agree, update my profile."
+        class="form-check-input"
+        type="checkbox"
+        id="saveMyProfile"
+      />
+      <label class="form-check-label" for="saveMyProfile">
+        <small style="vertical-align: text-bottom"> Proceed! </small>
+      </label>
+    </div>
+      <small
+        *ngIf="f.proceed.invalid && (f.proceed.dirty || f.proceed.touched)"
+        class="text-danger"
+        >*Required</small
+      >
+  </div>
+  <div class="my-3">
+    {{ profileForm.valid | json }}
+  </div>
+  <div class="my-3">
+    {{ profileForm.getRawValue() | json }}
+  </div>
+  <div class="my-3">
+    password: {{ profileForm.controls.password.errors | json }} password2:
+    {{ profileForm.controls.password2.errors | json }}
+    {{ profileForm.controls.proceed.errors | json }}
+  </div>
+  <button
+    [disabled]="!profileForm.valid"
+    type="submit"
+    class="d-md-none btn btn-block btn-lg btn-primary"
+  >
+    Save
+  </button>
+  <button
+    [disabled]="!profileForm.valid"
+    type="submit"
+    class="d-none d-md-block btn btn-primary"
+  >
+    Save
+  </button>
+</form>
