@@ -13,7 +13,7 @@ define("DB_PASS", "password");
 define("DB_NAME", "shop");
 define("DB_CHARSET", 'utf8');
 
-header('Access-Control-Allow-Origin: http://localhost:4200');
+header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, PATCH");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Max-Age: 3600");

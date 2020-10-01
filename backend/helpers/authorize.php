@@ -5,9 +5,9 @@ function authorize()
   if (isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
     $jwt = $matches[1];
     try {
-      Token::decodeJWT($jwt);
-      // return $decoded->data->user_id;
-      return true;
+      $decoded = Token::decodeJWT($jwt);
+      return $decoded->data->user_id;
+      // return true;
     } catch (UnexpectedValueException $e) {
       return false;
     } catch (Exception $e) {
