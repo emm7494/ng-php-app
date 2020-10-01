@@ -8,12 +8,14 @@ import { ProductComponent } from './components/product/product.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { NoAuthGuard } from './shared/guards/no-auth/no-auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LogInComponent,
     outlet: 'modal',
+    canActivate: [NoAuthGuard],
   },
   {
     path: 'logout',
@@ -37,7 +39,11 @@ const routes: Routes = [
     component: UserProfileComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'sign-up', component: SignUpComponent },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+    canActivate: [NoAuthGuard],
+  },
 ];
 
 @NgModule({
