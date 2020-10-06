@@ -63,6 +63,10 @@ export class LogInComponent implements OnInit {
             if (JSON.parse(next)) {
               this.router.navigate([{ outlets: { [outlet]: path } }]);
             }
+            console.log(this.router.routerState.snapshot.url);
+            if (this.router.routerState.snapshot.url.includes('sign-up')) {
+              this.router.navigate([{ outlets: { primary: null } }]);
+            }
             this.modalComponent.onClose();
           }, 1000);
         }

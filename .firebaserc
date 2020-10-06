@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ng-php-app": {
+      "hosting": {
+        "ng-php-app": [
+          "ng-php-app"
+        ]
+      }
+    }
+  }
+}

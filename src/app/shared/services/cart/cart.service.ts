@@ -1,11 +1,15 @@
 import { CartItem } from './../../models/cart/cart-item.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +40,14 @@ export class CartService {
         cart: items,
       })
       .pipe(catchError((resError) => this.handleError(resError)));
+  }
+
+  deleteUserCartItem(id: string) {
+    return this.http
+      .delete<string>(`${environment.apiURL}/delete_user_cart`, {
+        params: new HttpParams().set('product_id', id),
+      })
+      .pipe(catchError(this.handleError));
   }
 
   addCartItem(productId: string, quantity: number) {
@@ -89,8 +101,11 @@ export class CartService {
     this.addCartItems(items, false);
     this.storageService.mountCartTotal();
   }
-  private createItem(item: CartItem): FormControl {
-    return this.formBuilder.control(item.quantity);
+  private createItem(item: CartItem): FormGroup {
+    return this.formBuilder.group({
+      product_id: item.product_id,
+      quantity: item.quantity,
+    });
   }
 
   toFormGroup(items: CartItem[]): FormGroup {
