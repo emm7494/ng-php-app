@@ -9,7 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { StorageService } from '../storage/storage.service';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
